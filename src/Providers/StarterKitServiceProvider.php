@@ -145,21 +145,6 @@ class StarterKitServiceProvider extends ServiceProvider implements ProviderHttpK
             'starter-kit.config'
         );
 
-        // Publishing the views.
-        /*$this->publishes([
-            __DIR__.'/../resources/views' => base_path('resources/views/vendor/fligno'),
-        ], 'starter-kit.views');*/
-
-        // Publishing assets.
-        /*$this->publishes([
-            __DIR__.'/../resources/assets' => public_path('vendor/fligno'),
-        ], 'starter-kit.views');*/
-
-        // Publishing the translation files.
-        /*$this->publishes([
-            __DIR__.'/../resources/lang' => resource_path('lang/vendor/fligno'),
-        ], 'starter-kit.views');*/
-
         // Registering package commands.
         $this->commands($this->commands);
     }
