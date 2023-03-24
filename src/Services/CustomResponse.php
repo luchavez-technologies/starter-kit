@@ -83,9 +83,7 @@ class CustomResponse
     {
         $this->code = $code;
 
-        if ($code >= 400) {
-            $this->success = false;
-        }
+        $this->success = $code < 400;
 
         return $this;
     }
@@ -193,17 +191,12 @@ class CustomResponse
      */
     public function data(mixed $value = null): CustomResponse
     {
-        if ($value instanceof ResourceCollection) {
-            $pagination = $value->response(request())->getData(true);
-            $data = $pagination['data'];
-            unset($pagination['data']);
+        if ($value instanceof ResourceCollection || $value instanceof AbstractPaginator) {
+            $pagination = $value instanceof ResourceCollection ?
+                $value->response(request())->getData(true) :
+                $value->toArray();
 
-            // separate them on two different array keys to create uniformity
-            $this->pagination = $pagination;
-            $this->data = $data;
-        } elseif ($value instanceof AbstractPaginator) { // for Paginator and LengthAwarePaginator
-            // convert pagination to array
-            $pagination = $value->toArray();
+            // extract data from pagination
             $data = $pagination['data'];
             unset($pagination['data']);
 
@@ -236,11 +229,7 @@ class CustomResponse
 
         // Add the data or errors based on status code
         if (! empty($this->data)) {
-            if ($this->code >= 400) {
-                $data->put('errors', $this->data);
-            } else {
-                $data->put('data', $this->data);
-            }
+            $data->put($this->success ? 'data' : 'errors', $this->data);
         }
 
         // Add pagination if not empty
