@@ -7,7 +7,7 @@
  */
 
 use Composer\Autoload\ClassMapGenerator;
-use Luchavez\StarterKit\Services\CustomResponse;
+use Luchavez\StarterKit\Services\SimpleResponse;
 use Luchavez\StarterKit\Services\PackageDomain;
 use Luchavez\StarterKit\Services\StarterKit;
 use Illuminate\Database\Eloquent\Model;
@@ -44,18 +44,19 @@ if (! function_exists('starter_kit')) {
     }
 }
 
-/***** EXTENDED RESPONSE SERVICE *****/
+/***** SIMPLE RESPONSE SERVICE *****/
 
 if (! function_exists('custom_response')) {
     /**
      * @param string|null $message
      * @param mixed|null $data
      * @param int $code
-     * @return CustomResponse
+     * @return SimpleResponse
+     * @deprecated
      */
-    function custom_response(?string $message = null, mixed $data = null, int $code = 200): CustomResponse
+    function custom_response(?string $message = null, mixed $data = null, int $code = 200): SimpleResponse
     {
-        return resolve('custom-response', func_get_args());
+        return resolve('simple-response', func_get_args());
     }
 }
 
@@ -64,11 +65,38 @@ if (! function_exists('customResponse')) {
      * @param string|null $message
      * @param mixed|null $data
      * @param int $code
-     * @return CustomResponse
+     * @return SimpleResponse
+     * @deprecated
      */
-    function customResponse(?string $message = null, mixed $data = null, int $code = 200): CustomResponse
+    function customResponse(?string $message = null, mixed $data = null, int $code = 200): SimpleResponse
     {
         return custom_response($message, $data, $code);
+    }
+}
+
+if (! function_exists('simpleResponse')) {
+    /**
+     * @param string|null $message
+     * @param mixed|null $data
+     * @param int $code
+     * @return SimpleResponse
+     */
+    function simpleResponse(?string $message = null, mixed $data = null, int $code = 200): SimpleResponse
+    {
+        return resolve('simple-response', func_get_args());
+    }
+}
+
+if (! function_exists('simpleResponse')) {
+    /**
+     * @param string|null $message
+     * @param mixed|null $data
+     * @param int $code
+     * @return SimpleResponse
+     */
+    function simpleResponse(?string $message = null, mixed $data = null, int $code = 200): SimpleResponse
+    {
+        return simpleResponse($message, $data, $code);
     }
 }
 

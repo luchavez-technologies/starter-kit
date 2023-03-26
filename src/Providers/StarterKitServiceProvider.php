@@ -6,7 +6,7 @@ use Luchavez\StarterKit\Abstracts\BaseStarterKitServiceProvider as ServiceProvid
 use Luchavez\StarterKit\Exceptions\Handler;
 use Luchavez\StarterKit\Http\Middleware\ChangeAppLocaleMiddleware;
 use Luchavez\StarterKit\Interfaces\ProviderHttpKernelInterface;
-use Luchavez\StarterKit\Services\CustomResponse;
+use Luchavez\StarterKit\Services\SimpleResponse;
 use Luchavez\StarterKit\Services\PackageDomain;
 use Luchavez\StarterKit\Services\StarterKit;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -115,7 +115,7 @@ class StarterKitServiceProvider extends ServiceProvider implements ProviderHttpK
             );
         });
 
-        $this->app->bind('custom-response', fn ($app, $params) => new CustomResponse(...$params));
+        $this->app->bind('simple-response', fn ($app, $params) => new SimpleResponse(...$params));
 
         parent::register();
     }
@@ -127,7 +127,7 @@ class StarterKitServiceProvider extends ServiceProvider implements ProviderHttpK
      */
     public function provides(): array
     {
-        return ['starter-kit', 'custom-response', 'package-domain'];
+        return ['starter-kit', 'simple-response', 'package-domain'];
     }
 
     /**
