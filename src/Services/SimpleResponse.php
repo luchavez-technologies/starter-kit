@@ -11,18 +11,13 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 
 /**
- * Class CustomResponse
+ * Class SimpleResponse
  *
  * @author James Carlo Luchavez <jamescarloluchavez@gmail.com>
  *
  * @since  2021-11-19
- *
- * Usage
- *  This is a simple Response Class that allows you to method-chain
- *  The creation of response as well as creating a unified response format
- *  The end of your chain must always end with the generate() function
  */
-class CustomResponse
+class SimpleResponse
 {
     use UsesDataParsingTrait;
 
@@ -79,7 +74,7 @@ class CustomResponse
      * @param  int  $code
      * @return $this
      */
-    public function code(int $code): CustomResponse
+    public function code(int $code): SimpleResponse
     {
         $this->code = $code;
 
@@ -94,7 +89,7 @@ class CustomResponse
      * @param  int  $code
      * @return $this
      */
-    public function success(int $code = 200): CustomResponse
+    public function success(int $code = 200): SimpleResponse
     {
         return $this->code($code);
     }
@@ -105,7 +100,7 @@ class CustomResponse
      * @param  int  $code
      * @return $this
      */
-    public function failed(int $code = 400): CustomResponse
+    public function failed(int $code = 400): SimpleResponse
     {
         return $this->code($code);
     }
@@ -116,7 +111,7 @@ class CustomResponse
      *
      * @return $this
      */
-    public function unauthorized(int $code = 401): CustomResponse
+    public function unauthorized(int $code = 401): SimpleResponse
     {
         return $this->code($code);
     }
@@ -126,7 +121,7 @@ class CustomResponse
      *
      * @return $this
      */
-    public function forbidden(int $code = 403): CustomResponse
+    public function forbidden(int $code = 403): SimpleResponse
     {
         return $this->code($code);
     }
@@ -136,7 +131,7 @@ class CustomResponse
      *
      * @return $this
      */
-    public function notFound(int $code = 404): CustomResponse
+    public function notFound(int $code = 404): SimpleResponse
     {
         return $this->code($code);
     }
@@ -150,7 +145,7 @@ class CustomResponse
      * @param string[] $dictionary
      * @return $this
      */
-    public function slug(string $title, array $dictionary = []): CustomResponse
+    public function slug(string $title, array $dictionary = []): SimpleResponse
     {
         $title = Str::after($title, '::');
 
@@ -169,7 +164,7 @@ class CustomResponse
      * @param array $replace
      * @return $this
      */
-    public function message(string|null $message, array $replace = []): CustomResponse
+    public function message(string|null $message, array $replace = []): SimpleResponse
     {
         if ($message) {
             if (! $this->slug) {
@@ -189,7 +184,7 @@ class CustomResponse
      * @param  mixed  $value
      * @return $this
      */
-    public function data(mixed $value = null): CustomResponse
+    public function data(mixed $value = null): SimpleResponse
     {
         if ($value instanceof ResourceCollection || $value instanceof AbstractPaginator) {
             $pagination = $value instanceof ResourceCollection ?
