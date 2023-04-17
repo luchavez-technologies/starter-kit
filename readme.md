@@ -48,12 +48,8 @@ MIT. Please see the [license file](license.md) for more information.
 
 [ico-version]: https://img.shields.io/packagist/v/luchavez/starter-kit.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/luchavez/starter-kit.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/luchavez/starter-kit/master.svg?style=flat-square
-[ico-styleci]: https://styleci.io/repos/12345678/shield
 
 [link-packagist]: https://packagist.org/packages/luchavez/starter-kit
 [link-downloads]: https://packagist.org/packages/luchavez/starter-kit
-[link-travis]: https://travis-ci.org/luchavez/starter-kit
-[link-styleci]: https://styleci.io/repos/12345678
 [link-author]: https://github.com/luchmewep
 [link-contributors]: ../../contributors
