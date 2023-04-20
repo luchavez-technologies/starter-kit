@@ -5,10 +5,6 @@
 
 <p align="center"><img src="./images/logo.png" width="300"/></p>
 
-
-
-Take a look at [contributing.md](contributing.md) to see a to do list.
-
 ## Installation
 
 Via Composer
