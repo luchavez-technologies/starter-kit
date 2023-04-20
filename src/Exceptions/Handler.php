@@ -79,7 +79,7 @@ class Handler extends ExceptionHandler
      */
     public function unauthenticated($request, AuthenticationException $exception): JsonResponse
     {
-        return customResponse()
+        return simpleResponse()
             ->message('You do not have a valid authentication token.')
             ->slug('missing bearer token')
             ->failed(401)
@@ -93,7 +93,7 @@ class Handler extends ExceptionHandler
      */
     protected function invalidJson($request, ValidationException $exception): JsonResponse
     {
-        return customResponse()
+        return simpleResponse()
             ->message($exception->getMessage())
             ->data($exception->errors())
             ->failed($exception->status)

@@ -59,7 +59,7 @@ class StarterKitServiceProvider extends ServiceProvider implements ProviderHttpK
             $this->app->singleton(ExceptionHandler::class, Handler::class);
 
             starterKit()->addExceptionRender(ModelNotFoundException::class, function () {
-                return customResponse()
+                return simpleResponse()
                     ->message('The resource you are looking for does not exist.')
                     ->slug('no_query_result')
                     ->failed(404)
@@ -67,7 +67,7 @@ class StarterKitServiceProvider extends ServiceProvider implements ProviderHttpK
             });
 
             starterKit()->addExceptionRender(AuthorizationException::class, function ($request, AuthorizationException $exception) {
-                return customResponse()
+                return simpleResponse()
                     ->message($exception->getMessage())
                     ->failed(403)
                     ->generate();
