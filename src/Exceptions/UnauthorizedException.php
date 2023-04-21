@@ -25,7 +25,7 @@ class UnauthorizedException extends Exception
 
     public function render($request): JsonResponse
     {
-        return customResponse()
+        return simpleResponse()
             ->data([])
             ->message($this->getMessage() ?: 'You do not have the necessary permission to access this resource.')
             ->failed($this->getCode())
