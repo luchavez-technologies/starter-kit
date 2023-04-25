@@ -316,7 +316,7 @@ class PackageDomain
     {
         if ($this->existing_paths?->has(StarterKit::POLICIES_DIR)) {
             $this->starter_kit->getPolicies($this->provider_data->package, $this->provider_data->domain, $this->getPolicyMap())
-                ->each(function ($model, $policy) {
+                ?->each(function ($model, $policy) {
                     if ($model instanceof Collection) {
                         $model = $model->first();
                     }
