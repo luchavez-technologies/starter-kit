@@ -47,5 +47,5 @@ MIT. Please see the [license file](license.md) for more information.
 
 [link-packagist]: https://packagist.org/packages/luchavez/starter-kit
 [link-downloads]: https://packagist.org/packages/luchavez/starter-kit
-[link-author]: https://github.com/luchmewep
+[link-author]: https://github.com/luchavez-technologies
 [link-contributors]: ../../contributors

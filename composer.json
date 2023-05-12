@@ -9,7 +9,7 @@
             "homepage": "https://www.linkedin.com/in/jsluchavez/"
         }
     ],
-    "homepage": "https://github.com/luchmewep/starter-kit",
+    "homepage": "https://github.com/luchavez-technologies/starter-kit",
     "keywords": ["Laravel", "StarterKit"],
     "require": {
         "php": "^8.0",
