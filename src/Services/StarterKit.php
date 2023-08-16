@@ -198,7 +198,7 @@ class StarterKit
                     self::PROVIDERS_DIR,
                     self::MODELS_DIR => collect_classes_from_path($path)
                         ->mapWithKeys(fn ($model) => [
-                            // App/Models/User => User
+                            // ex: App/Models/User => User
                             $model => Str::of($model)->afterLast('\\')->jsonSerialize(),
                         ])->toArray(),
 

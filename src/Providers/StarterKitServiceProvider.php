@@ -37,7 +37,7 @@ class StarterKitServiceProvider extends ServiceProvider implements ProviderHttpK
      */
     protected array $env_vars = [
         'SK_OVERRIDE_EXCEPTION_HANDLER' => false,
-        'SK_ENFORCE_MORPH_MAP' => true,
+        'SK_ENFORCE_MORPH_MAP' => false,
         'SK_VERIFY_SSL' => true,
         'SK_SENTRY_ENABLED' => false,
         'SK_SENTRY_TEST_API_ENABLED' => false,

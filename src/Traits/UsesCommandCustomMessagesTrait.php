@@ -47,10 +47,20 @@ trait UsesCommandCustomMessagesTrait
      * @param  int|string|null  $verbosity
      * @return void
      */
+    public function success(string $message, int|string $verbosity = null): void
+    {
+        $this->note(message: $message, title: 'SUCCESS', verbosity: $verbosity);
+    }
+
+    /**
+     * @param  string  $message
+     * @param  int|string|null  $verbosity
+     * @return void
+     */
     public function failed(string $message, int|string $verbosity = null): void
     {
         $this->setupOutputFormatters();
-        $this->error(Str::finish("<red-bg-bold>[ ERROR ]</red-bg-bold> $message", '.'), $verbosity);
+        $this->error(Str::finish("$message", '.'), $verbosity);
     }
 
     /**
@@ -61,7 +71,7 @@ trait UsesCommandCustomMessagesTrait
     public function warning(string $message, int|string $verbosity = null): void
     {
         $this->setupOutputFormatters();
-        $this->warn(Str::finish("<yellow-bg-bold>[ WARNING ]</yellow-bg-bold> $message", '.'), $verbosity);
+        $this->warn(Str::finish("<yellow-bg-bold> WARNING </yellow-bg-bold> $message", '.'), $verbosity);
     }
 
     /**
@@ -74,7 +84,7 @@ trait UsesCommandCustomMessagesTrait
     public function note(string $message, string $title = 'INFO', bool $add_period = true, int|string $verbosity = null): void
     {
         $this->setupOutputFormatters();
-        $message = Str::of("<green-bg-bold>[ $title ]</green-bg-bold> $message");
+        $message = Str::of("<green-bg-bold> $title </green-bg-bold> $message");
 
         if (! $message->endsWith('.')) {
             $message = Str::of($message)->when($add_period, fn (Stringable $str) => $str->finish('.'));

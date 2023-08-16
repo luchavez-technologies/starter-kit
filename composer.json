@@ -1,6 +1,6 @@
 {
     "name": "luchavez/starter-kit",
-    "description": "A starter kit for building packages and implementing DDD for Laravel.",
+    "description": "A starter kit for building packages and implementing DDD on Laravel 8|9|10.",
     "license": "MIT",
     "authors": [
         {
@@ -14,12 +14,12 @@
     "require": {
         "php": "^8.0",
         "illuminate/support": "~8|~9|~10",
-        "composer/composer": "^2.4",
-        "laravel/telescope": "^4.10",
+        "composer/composer": "^2.5",
+        "laravel/telescope": "^4.15",
         "ext-zlib": "*",
-        "sentry/sentry-laravel": "^3.1",
-        "hammerstone/fast-paginate": "^0.1.11",
-        "spatie/laravel-query-builder": "^5.1|^4.0"
+        "sentry/sentry-laravel": "^3.6",
+        "hammerstone/fast-paginate": "^1.0",
+        "spatie/laravel-query-builder": "^5.2|^4.0"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
