@@ -1176,47 +1176,54 @@ if (! function_exists('add_provider_to_app_config')) {
             return false;
         }
 
-        $search = ["'providers' => [", '],'];
+        $search_strings = [
+            ["'providers' => [", '],'], // Laravel 9 and below
+            ["'providers' => ServiceProvider::defaultProviders()->merge([", "])->toArray(),"] // Laravel 10 and above
+        ];
 
-        $pieces = collect();
+        foreach ($search_strings as $search) {
+            $pieces = collect();
 
-        foreach ($search as $s) {
-            $matches = preg_grep('/'.preg_quote($s).'/', $contents);
-            if ($matches && count($matches)) {
-                $index = array_keys($matches)[0];
-                $pieces->add(array_slice($contents, 0, $index));
-                $contents = array_slice($contents, $index);
-            }
-        }
-
-        $pieces->add($contents);
-
-        if ($pieces->count() === 3) {
-            $providers = $pieces->get(1);
-
-            // Find uncommented string from reversed providers array
-            $sample = null;
-            $reverse = array_reverse($providers);
-
-            foreach ($reverse as $rev) {
-                if ($rev && ! preg_match('~[/\*]+~', $rev)) {
-                    $sample = $rev;
-                    break;
+            foreach ($search as $s) {
+                $matches = preg_grep('/'.preg_quote($s).'/', $contents);
+                if ($matches && count($matches)) {
+                    $index = array_keys($matches)[0];
+                    $pieces->add(array_slice($contents, 0, $index));
+                    $contents = array_slice($contents, $index);
                 }
             }
 
-            // Use the uncommented string
-            if ($sample) {
-                $sample = preg_replace(
-                    '/[a-z\d\\\:]+/i',
-                    Str::of($provider)->finish('::class')->jsonSerialize(),
-                    $sample
-                );
-                $providers[] = Str::finish($sample, ',');
-                $pieces->put(1, $providers);
+            $pieces->add($contents);
 
-                return file_put_contents($path, $pieces->collapse()->implode("\n"));
+            if ($pieces->count() === 3) {
+                $providers = $pieces->get(1);
+
+                // Find uncommented string from reversed providers array
+                $sample = null;
+                $reverse = array_reverse($providers);
+
+                foreach ($reverse as $rev) {
+                    if ($rev && ! preg_match('~[/\*]+~', $rev)) {
+                        $sample = $rev;
+                        break;
+                    }
+                }
+
+                // Use the uncommented string
+                if ($sample) {
+                    $sample = preg_replace(
+                        '/[a-z\d\\\:]+/i',
+                        Str::of($provider)->finish('::class')->jsonSerialize(),
+                        $sample
+                    );
+                    $providers[] = Str::finish($sample, ',');
+                    $pieces->put(1, $providers);
+
+                    return file_put_contents($path, $pieces->collapse()->implode("\n"));
+                }
             }
+
+            $contents = explode("\n", file_get_contents($path));
         }
 
         return false;

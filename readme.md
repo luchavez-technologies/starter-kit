@@ -1,19 +1,36 @@
-# Starter Kit
+# Starter Kit for Laravel 8|9|10
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Total Downloads][ico-downloads]][link-downloads]
 
 <p align="center"><img src="./images/logo.png" width="300"/></p>
 
+The Starter Kit package is the counterpart of [Boilerplate Generator package](https://packagist.org/packages/luchavez/boilerplate-generator). This package is a required dependency since it will be used by the domains (DDD) and packages generated through "Boilerplate Generator".
+
 ## Installation
 
-Via Composer
-
+The straightforward way to install this package goes like this:
 ``` bash
-$ composer require luchavez/starter-kit
+composer require luchavez/starter-kit --with-all-dependencies
 ```
 
-## Usage
+The preferred way is to install it is via another package called [luchavez/boilerplate-generator](https://packagist.org/packages/luchavez/boilerplate-generator).
+```bash
+composer require luchavez/boilerplate-generator --dev --with-all-dependencies
+php artisan bg:install
+php artisan bg:env:publish --all
+```
+
+## Dependencies
+
+| Package                        | Packagist                                                                   |
+|--------------------------------|-----------------------------------------------------------------------------|
+| `illuminate/support`           | [~8 or ~9 or ~10](https://packagist.org/packages/illuminate/support)        |
+| `composer/composer`            | [^2.5](https://packagist.org/packages/composer/composer)                    |
+| `laravel/telescope`            | [^4.15](https://packagist.org/packages/laravel/telescope)                   |
+| `sentry/sentry-laravel`        | [^3.6](https://packagist.org/packages/sentry/sentry-laravel)                |
+| `hammerstone/fast-paginate`    | [^1.0](https://packagist.org/packages/hammerstone/fast-paginate)            |
+| `spatie/laravel-query-builder` | [^5.2 or ^4.0](https://packagist.org/packages/spatie/laravel-query-builder) |
 
 ## Change log
 
