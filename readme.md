@@ -2,7 +2,9 @@
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Total Downloads][ico-downloads]][link-downloads]
+[![GitHub Repo stars][ico-stars]][link-stars]
 [![Discord](https://img.shields.io/discord/1143744619956404295?color=8c9eff&label=Discord&logo=discord)](https://discord.gg/bFpDTgp3)
+[![Twitter Follow][ico-twitter]][link-twitter]
 
 <p align="center"><img src="./images/logo.png" width="300"/></p>
 
@@ -60,10 +62,17 @@ If you discover any security related issues, please email jamescarloluchavez@gma
 
 MIT. Please see the [license file](license.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/luchavez/starter-kit.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/luchavez/starter-kit.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/luchavez/starter-kit.svg
+[ico-downloads]: https://img.shields.io/packagist/dt/luchavez/starter-kit.svg
+[ico-stars]: https://img.shields.io/github/stars/luchavez-technologies/starter-kit
+[ico-discord]: https://img.shields.io/discord/1143744619956404295?color=8c9eff&label=Discord&logo=discord
+[ico-twitter]: https://img.shields.io/twitter/follow/luchaveztech
 
 [link-packagist]: https://packagist.org/packages/luchavez/starter-kit
 [link-downloads]: https://packagist.org/packages/luchavez/starter-kit
+[link-stars]: https://github.com/luchavez-technologies/starter-kit
+[link-discord]: https://discord.gg/bFpDTgp3
+[link-twitter]: https://twitter.com/luchaveztech
+
 [link-author]: https://github.com/luchavez-technologies
 [link-contributors]: ../../contributors
