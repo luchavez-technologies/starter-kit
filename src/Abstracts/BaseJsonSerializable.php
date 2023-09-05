@@ -77,7 +77,7 @@ abstract class BaseJsonSerializable implements JsonSerializable
                 if (method_exists($this, $method_field)) {
                     $this->$method_field($array[$value]);
                 }
-                if (method_exists($this, $method)) {
+                else if (method_exists($this, $method)) {
                     $this->$method($array[$value]);
                 } else {
                     $this->$value = $array[$value];
