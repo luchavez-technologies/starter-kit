@@ -73,7 +73,11 @@ abstract class BaseJsonSerializable implements JsonSerializable
         $this->getFieldKeys()->each(function ($value) use ($array) {
             if (Arr::has($array, $value)) {
                 $method = 'set'.preg_replace('/[^a-z\d]/i', '', $value);
-                if (method_exists($this, $method) || (($method = $method.'Field') && method_exists($this, $method))) {
+                $method_field = $method.'Field';
+                if (method_exists($this, $method_field)) {
+                    $this->$method_field($array[$value]);
+                }
+                if (method_exists($this, $method)) {
                     $this->$method($array[$value]);
                 } else {
                     $this->$value = $array[$value];
