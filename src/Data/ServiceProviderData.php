@@ -2,12 +2,12 @@
 
 namespace Luchavez\StarterKit\Data;
 
-use Luchavez\StarterKit\Abstracts\BaseJsonSerializable;
-use Luchavez\StarterKit\Abstracts\BaseStarterKitServiceProvider;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
+use Luchavez\StarterKit\Abstracts\BaseJsonSerializable;
+use Luchavez\StarterKit\Abstracts\BaseStarterKitServiceProvider;
 
 /**
  * Class ServiceProviderData
@@ -26,17 +26,17 @@ class ServiceProviderData extends BaseJsonSerializable
      */
     public string $composer;
 
-    public ServiceProvider|null $provider;
+    public ?ServiceProvider $provider;
 
     /**
      * @var string|null
      */
-    public string|null $package = null;
+    public ?string $package = null;
 
     /**
      * @var string|null
      */
-    public string|null $domain = null;
+    public ?string $domain = null;
 
     /**
      * @var string
@@ -47,7 +47,7 @@ class ServiceProviderData extends BaseJsonSerializable
      * @param  mixed  $data
      * @param  string|null  $key
      */
-    public function __construct(mixed $data = [], ?string $key = null)
+    public function __construct(mixed $data = [], string $key = null)
     {
         parent::__construct($data, $key);
 
@@ -60,8 +60,8 @@ class ServiceProviderData extends BaseJsonSerializable
     /***** GETTERS *****/
 
     /**
-     * @param bool $as_namespace
-     * @param string $separator
+     * @param  bool  $as_namespace
+     * @param  string  $separator
      * @return string|null
      */
     public function getDecodedDomain(bool $as_namespace = false, string $separator = '.'): ?string
@@ -135,7 +135,7 @@ class ServiceProviderData extends BaseJsonSerializable
     /**
      * @return Collection|null
      */
-    public function getPackageEnvVars(): Collection|null
+    public function getPackageEnvVars(): ?Collection
     {
         $provider = $this->getServiceProvider();
         if ($provider instanceof BaseStarterKitServiceProvider) {

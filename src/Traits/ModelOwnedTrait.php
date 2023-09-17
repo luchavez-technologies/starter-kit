@@ -2,10 +2,10 @@
 
 namespace Luchavez\StarterKit\Traits;
 
-use Luchavez\StarterKit\Scopes\ModelOwnedScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User;
+use Luchavez\StarterKit\Scopes\ModelOwnedScope;
 
 /**
  * Trait ModelOwnedTrait

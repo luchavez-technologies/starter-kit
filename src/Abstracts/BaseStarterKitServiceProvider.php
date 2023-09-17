@@ -2,8 +2,8 @@
 
 namespace Luchavez\StarterKit\Abstracts;
 
-use Luchavez\StarterKit\Traits\UsesProviderStarterKitTrait;
 use Illuminate\Support\ServiceProvider;
+use Luchavez\StarterKit\Traits\UsesProviderStarterKitTrait;
 
 /**
  * Class BaseStarterKitServiceProvider

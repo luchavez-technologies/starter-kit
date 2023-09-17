@@ -2,13 +2,13 @@
 
 namespace Luchavez\StarterKit\Services;
 
-use Luchavez\StarterKit\Traits\UsesDataParsingTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
+use Luchavez\StarterKit\Traits\UsesDataParsingTrait;
 
 /**
  * Class SimpleResponse
@@ -44,7 +44,7 @@ class SimpleResponse
     /**
      * @var string|null
      */
-    protected string|null $slug = null;
+    protected ?string $slug = null;
 
     /**
      * @var array
@@ -54,11 +54,11 @@ class SimpleResponse
     /**
      * ExtendedResponse constructor.
      *
-     * @param string|null $message
-     * @param mixed $data
-     * @param int $code
+     * @param  string|null  $message
+     * @param  mixed  $data
+     * @param  int  $code
      */
-    public function __construct(?string $message = null, mixed $data = null, int $code = 200)
+    public function __construct(string $message = null, mixed $data = null, int $code = 200)
     {
         $this
             ->message($message)
@@ -141,8 +141,8 @@ class SimpleResponse
     /**
      * Set a custom slug
      *
-     * @param string $title
-     * @param string[] $dictionary
+     * @param  string  $title
+     * @param  string[]  $dictionary
      * @return $this
      */
     public function slug(string $title, array $dictionary = []): SimpleResponse
@@ -160,11 +160,11 @@ class SimpleResponse
     /**
      * Set message
      *
-     * @param string|null $message
-     * @param array $replace
+     * @param  string|null  $message
+     * @param  array  $replace
      * @return $this
      */
-    public function message(string|null $message, array $replace = []): SimpleResponse
+    public function message(?string $message, array $replace = []): SimpleResponse
     {
         if ($message) {
             if (! $this->slug) {

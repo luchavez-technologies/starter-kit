@@ -57,8 +57,8 @@ class Handler extends ExceptionHandler
     }
 
     /**
-     * @param Request $request
-     * @param Throwable $e
+     * @param  Request  $request
+     * @param  Throwable  $e
      * @return Response|\Symfony\Component\HttpFoundation\JsonResponse
      *
      * @throws Throwable
@@ -73,8 +73,8 @@ class Handler extends ExceptionHandler
     }
 
     /**
-     * @param Request $request
-     * @param AuthenticationException $exception
+     * @param  Request  $request
+     * @param  AuthenticationException  $exception
      * @return JsonResponse
      */
     public function unauthenticated($request, AuthenticationException $exception): JsonResponse
@@ -88,7 +88,7 @@ class Handler extends ExceptionHandler
 
     /**
      * @param $request
-     * @param ValidationException $exception
+     * @param  ValidationException  $exception
      * @return JsonResponse
      */
     protected function invalidJson($request, ValidationException $exception): JsonResponse

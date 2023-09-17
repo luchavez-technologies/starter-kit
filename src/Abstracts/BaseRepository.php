@@ -2,11 +2,11 @@
 
 namespace Luchavez\StarterKit\Abstracts;
 
-use Luchavez\StarterKit\Interfaces\RepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Luchavez\StarterKit\Interfaces\RepositoryInterface;
 use Spatie\QueryBuilder\QueryBuilder;
 
 /**
@@ -21,14 +21,14 @@ abstract class BaseRepository implements RepositoryInterface
     /**
      * @param  QueryBuilder|null  $builder
      */
-    public function __construct(protected QueryBuilder|null $builder = null)
+    public function __construct(protected ?QueryBuilder $builder = null)
     {
     }
 
     /**
      * @return QueryBuilder|null
      */
-    public function builder(): QueryBuilder|null
+    public function builder(): ?QueryBuilder
     {
         return $this->builder?->clone();
     }
@@ -36,7 +36,7 @@ abstract class BaseRepository implements RepositoryInterface
     /**
      * @return QueryBuilder|null
      */
-    public function getBuilder(): QueryBuilder|null
+    public function getBuilder(): ?QueryBuilder
     {
         return $this->builder();
     }
@@ -54,7 +54,7 @@ abstract class BaseRepository implements RepositoryInterface
      * @param  mixed  $attributes
      * @return Model|null
      */
-    public function make(mixed $attributes = null): Model|null
+    public function make(mixed $attributes = null): ?Model
     {
         return $this->builder()?->firstOrNew($attributes ?? []);
     }
@@ -63,7 +63,7 @@ abstract class BaseRepository implements RepositoryInterface
      * @param  mixed  $attributes
      * @return Model|null
      */
-    public function create(mixed $attributes = null): Model|null
+    public function create(mixed $attributes = null): ?Model
     {
         $found_or_new = $this->make($attributes);
 

@@ -2,19 +2,19 @@
 
 namespace Luchavez\StarterKit\Providers;
 
-use Luchavez\StarterKit\Abstracts\BaseStarterKitServiceProvider as ServiceProvider;
-use Luchavez\StarterKit\Exceptions\Handler;
-use Luchavez\StarterKit\Http\Middleware\ChangeAppLocaleMiddleware;
-use Luchavez\StarterKit\Interfaces\ProviderHttpKernelInterface;
-use Luchavez\StarterKit\Services\SimpleResponse;
-use Luchavez\StarterKit\Services\PackageDomain;
-use Luchavez\StarterKit\Services\StarterKit;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Application;
 use Illuminate\Routing\Router;
+use Luchavez\StarterKit\Abstracts\BaseStarterKitServiceProvider as ServiceProvider;
+use Luchavez\StarterKit\Exceptions\Handler;
+use Luchavez\StarterKit\Http\Middleware\ChangeAppLocaleMiddleware;
+use Luchavez\StarterKit\Interfaces\ProviderHttpKernelInterface;
+use Luchavez\StarterKit\Services\PackageDomain;
+use Luchavez\StarterKit\Services\SimpleResponse;
+use Luchavez\StarterKit\Services\StarterKit;
 
 /**
  * Class StarterKitServiceProvider
@@ -140,7 +140,7 @@ class StarterKitServiceProvider extends ServiceProvider implements ProviderHttpK
         // Publishing the configuration file.
         $this->publishes(
             [
-                __DIR__.'/../config/starter-kit.php' => config_path('starter-kit.php'),
+                __DIR__.'/../../config/starter-kit.php' => config_path('starter-kit.php'),
             ],
             'starter-kit.config'
         );
@@ -176,7 +176,7 @@ class StarterKitServiceProvider extends ServiceProvider implements ProviderHttpK
     /***** LANG RELATED *****/
 
     /**
-     * @param Router $router
+     * @param  Router  $router
      * @return void
      */
     public function registerToHttpKernel(Router $router): void
