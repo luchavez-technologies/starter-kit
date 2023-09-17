@@ -3,13 +3,6 @@
 namespace Luchavez\StarterKit\Services;
 
 use Exception;
-use Luchavez\StarterKit\Abstracts\BaseStarterKitServiceProvider;
-use Luchavez\StarterKit\Data\ServiceProviderData;
-use Luchavez\StarterKit\Traits\UsesProviderMorphMapTrait;
-use Luchavez\StarterKit\Traits\UsesProviderObserverMapTrait;
-use Luchavez\StarterKit\Traits\UsesProviderPolicyMapTrait;
-use Luchavez\StarterKit\Traits\UsesProviderRepositoryMapTrait;
-use Luchavez\StarterKit\Traits\UsesProviderRoutesTrait;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Foundation\CachesConfiguration;
 use Illuminate\Contracts\Foundation\CachesRoutes;
@@ -22,6 +15,13 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 use Illuminate\Translation\Translator;
+use Luchavez\StarterKit\Abstracts\BaseStarterKitServiceProvider;
+use Luchavez\StarterKit\Data\ServiceProviderData;
+use Luchavez\StarterKit\Traits\UsesProviderMorphMapTrait;
+use Luchavez\StarterKit\Traits\UsesProviderObserverMapTrait;
+use Luchavez\StarterKit\Traits\UsesProviderPolicyMapTrait;
+use Luchavez\StarterKit\Traits\UsesProviderRepositoryMapTrait;
+use Luchavez\StarterKit\Traits\UsesProviderRoutesTrait;
 use Spatie\QueryBuilder\QueryBuilder;
 use Throwable;
 
@@ -41,7 +41,7 @@ class PackageDomain
     /**
      * @var ServiceProvider|null
      */
-    protected ServiceProvider|null $provider = null;
+    protected ?ServiceProvider $provider = null;
 
     /**
      * @var Collection|array
@@ -51,19 +51,19 @@ class PackageDomain
     /**
      * @var ServiceProviderData|null
      */
-    protected ServiceProviderData|null $provider_data = null;
+    protected ?ServiceProviderData $provider_data = null;
 
     /**
      * @var Collection|null
      */
-    protected Collection|null $existing_paths = null;
+    protected ?Collection $existing_paths = null;
 
     /**
-     * @param Application $app
-     * @param StarterKit $starter_kit
-     * @param Repository $config
-     * @param Migrator $migrator
-     * @param Translator $translator
+     * @param  Application  $app
+     * @param  StarterKit  $starter_kit
+     * @param  Repository  $config
+     * @param  Migrator  $migrator
+     * @param  Translator  $translator
      */
     public function __construct(
         protected Application $app,

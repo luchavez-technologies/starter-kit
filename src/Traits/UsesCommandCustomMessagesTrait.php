@@ -150,7 +150,7 @@ trait UsesCommandCustomMessagesTrait
      * @param  TableStyle|string  $table_style
      * @return Table|null
      */
-    public function createTable(string $title = null, array $headers = [], Collection|array $rows = [], string $title_format = 'default-bold', TableStyle|string $table_style = 'box'): Table|null
+    public function createTable(string $title = null, array $headers = [], Collection|array $rows = [], string $title_format = 'default-bold', TableStyle|string $table_style = 'box'): ?Table
     {
         $rows = collect($rows);
 

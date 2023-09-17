@@ -84,7 +84,7 @@ class ModelExpiringScope implements Scope
      */
     protected function addExpire(Builder $builder): void
     {
-        $builder->macro('expire', function (Builder $builder, Carbon|string|null $date_time = null) {
+        $builder->macro('expire', function (Builder $builder, Carbon|string $date_time = null) {
             $column = $this->getExpiresAtColumn($builder);
 
             return $builder->update([$column => $this->getExpirationDateTime($date_time)]);
@@ -99,7 +99,7 @@ class ModelExpiringScope implements Scope
      */
     protected function addWithExpired(Builder $builder): void
     {
-        $builder->macro('withExpired', function (Builder $builder, bool $with_expired = true, Carbon|string|null $date_time = null) {
+        $builder->macro('withExpired', function (Builder $builder, bool $with_expired = true, Carbon|string $date_time = null) {
             if (! $with_expired) {
                 return $builder->withoutExpired($date_time);
             }
@@ -116,7 +116,7 @@ class ModelExpiringScope implements Scope
      */
     protected function addWithoutExpired(Builder $builder): void
     {
-        $builder->macro('withoutExpired', function (Builder $builder, Carbon|string|null $date_time = null) {
+        $builder->macro('withoutExpired', function (Builder $builder, Carbon|string $date_time = null) {
             $column = $this->getExpiresAtColumn($builder);
 
             $builder->withoutGlobalScope($this)
@@ -135,7 +135,7 @@ class ModelExpiringScope implements Scope
      */
     protected function addOnlyExpired(Builder $builder): void
     {
-        $builder->macro('onlyExpired', function (Builder $builder, Carbon|string|null $date_time = null) {
+        $builder->macro('onlyExpired', function (Builder $builder, Carbon|string $date_time = null) {
             $column = $this->getExpiresAtColumn($builder);
 
             return $builder->withoutGlobalScope($this)
@@ -148,7 +148,7 @@ class ModelExpiringScope implements Scope
      * @param  Carbon|string|null  $date_time
      * @return string
      */
-    public static function getExpirationDateTime(Carbon|string|null $date_time = null): string
+    public static function getExpirationDateTime(Carbon|string $date_time = null): string
     {
         if ($date_time) {
             $date_time = $date_time instanceof Carbon ? $date_time : Carbon::parse($date_time);

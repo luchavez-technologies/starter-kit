@@ -17,7 +17,7 @@ trait UsesProviderRoutesTrait
     /**
      * @var string|null
      */
-    protected string|null $route_prefix = null;
+    protected ?string $route_prefix = null;
 
     /**
      * @var bool
@@ -42,12 +42,12 @@ trait UsesProviderRoutesTrait
     /**
      * @var array|null
      */
-    protected array|null $default_api_middleware = null;
+    protected ?array $default_api_middleware = null;
 
     /**
      * @var array|null
      */
-    protected array|null $default_web_middleware = null;
+    protected ?array $default_web_middleware = null;
 
     /**
      * @return bool

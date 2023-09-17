@@ -2,13 +2,13 @@
 
 namespace Luchavez\StarterKit\Traits;
 
-use Luchavez\StarterKit\Abstracts\BaseJsonSerializable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Client\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Luchavez\StarterKit\Abstracts\BaseJsonSerializable;
 use ReflectionException;
 
 /**
@@ -23,7 +23,7 @@ trait UsesDataParsingTrait
      * @param  string|null  $key
      * @return array
      */
-    public function parseArray(array $response, ?string $key = null): array
+    public function parseArray(array $response, string $key = null): array
     {
         return $key && isset($response[$key]) ? Arr::wrap($response[$key]) : $response;
     }
@@ -33,7 +33,7 @@ trait UsesDataParsingTrait
      * @param  string|null  $key
      * @return array
      */
-    public function parseResponse(Response $response, ?string $key = null): array
+    public function parseResponse(Response $response, string $key = null): array
     {
         if ($response->ok() && $array = $response->json($key)) {
             return $this->parse($array);
@@ -47,7 +47,7 @@ trait UsesDataParsingTrait
      * @param  string|null  $key
      * @return array
      */
-    public function parseRequest(Request $response, ?string $key = null): array
+    public function parseRequest(Request $response, string $key = null): array
     {
         $response = $response instanceof FormRequest ? $response->validated() : $response->all();
 
@@ -59,7 +59,7 @@ trait UsesDataParsingTrait
      * @param  string|null  $key
      * @return array
      */
-    public function parseCollection(Collection $response, ?string $key = null): array
+    public function parseCollection(Collection $response, string $key = null): array
     {
         return $key && $response->has($key) ? $this->parse($response->get($key)) : $response->toArray();
     }
@@ -69,7 +69,7 @@ trait UsesDataParsingTrait
      * @param  string|null  $key
      * @return array
      */
-    public function parseBaseJsonSerializable(BaseJsonSerializable $response, ?string $key = null): array
+    public function parseBaseJsonSerializable(BaseJsonSerializable $response, string $key = null): array
     {
         return $this->parse($response->toArray(), $key);
     }
@@ -79,7 +79,7 @@ trait UsesDataParsingTrait
      * @param  string|null  $key
      * @return array
      */
-    public function parseModel(Model $response, ?string $key = null): array
+    public function parseModel(Model $response, string $key = null): array
     {
         return $key && isset($response->$key) ? $this->parse($response->$key) : $response->toArray();
     }
@@ -89,7 +89,7 @@ trait UsesDataParsingTrait
      * @param  string|null  $key
      * @return array
      */
-    public function parse(mixed $data = [], ?string $key = null): array
+    public function parse(mixed $data = [], string $key = null): array
     {
         if (is_array($data)) {
             return $this->parseArray($data, $key);

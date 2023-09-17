@@ -24,7 +24,7 @@ trait HasTaggableCacheTrait
     /**
      * @var CacheManager|null
      */
-    protected CacheManager|null $cache_manager = null;
+    protected ?CacheManager $cache_manager = null;
 
     /**
      * @return CacheManager
@@ -117,8 +117,8 @@ trait HasTaggableCacheTrait
     }
 
     /**
-     * @param string $key
-     * @param string[] $tags
+     * @param  string  $key
+     * @param  string[]  $tags
      * @return bool
      */
     public function forgetCache(array $tags, string $key): bool
@@ -133,9 +133,9 @@ trait HasTaggableCacheTrait
     }
 
     /**
-     * @param CacheManager $manager
-     * @param array $tags
-     * @param string $key
+     * @param  CacheManager  $manager
+     * @param  array  $tags
+     * @param  string  $key
      * @return void
      */
     protected function prepareCacheManagerAndKey(CacheManager &$manager, string &$key, array $tags = []): void

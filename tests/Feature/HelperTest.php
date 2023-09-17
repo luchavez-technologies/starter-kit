@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Str;
-
 use function Pest\Faker\faker;
 use function PHPUnit\Framework\assertFalse;
 use function PHPUnit\Framework\assertTrue;
@@ -10,7 +9,7 @@ uses()->group('helpers');
 
 /***** ENV FILE RELATED *****/
 
-it('can update env variables', function (string $key, string $value, string|null $title, bool $override) {
+it('can update env variables', function (string $key, string $value, ?string $title, bool $override) {
     assertTrue(add_contents_to_env([$key => $value], $title, $override));
 
     $key = Str::of($key)->lower()->snake()->upper()->jsonSerialize();
@@ -68,7 +67,7 @@ it('can decode domain to namespace', function (string $domain) {
     expect(domain_decode($domain, true))->toBe($str);
 })->with('domains')->group('domain');
 
-it('can encode path to domain', function (string $input, string|null $expected) {
+it('can encode path to domain', function (string $input, ?string $expected) {
     expect(domain_encode($input))->toBe($expected);
 })->with([
     'a path with no domain' => [
@@ -89,7 +88,7 @@ it('can encode path to domain', function (string $input, string|null $expected) 
     ],
 ])->group('domain');
 
-it('can encode namespace to domain', function (string $input, string|null $expected) {
+it('can encode namespace to domain', function (string $input, ?string $expected) {
     expect(domain_encode($input))->toBe($expected);
 })->with([
     'a namespace with no domain' => [

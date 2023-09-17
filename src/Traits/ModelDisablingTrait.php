@@ -2,8 +2,8 @@
 
 namespace Luchavez\StarterKit\Traits;
 
-use Luchavez\StarterKit\Scopes\ModelDisablingScope;
 use Illuminate\Database\Eloquent\Builder;
+use Luchavez\StarterKit\Scopes\ModelDisablingScope;
 
 /**
  * Trait ModelDisablesTrait

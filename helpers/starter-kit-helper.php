@@ -7,9 +7,6 @@
  */
 
 use Composer\Autoload\ClassMapGenerator;
-use Luchavez\StarterKit\Services\SimpleResponse;
-use Luchavez\StarterKit\Services\PackageDomain;
-use Luchavez\StarterKit\Services\StarterKit;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
@@ -20,6 +17,9 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 use JetBrains\PhpStorm\Pure;
+use Luchavez\StarterKit\Services\PackageDomain;
+use Luchavez\StarterKit\Services\SimpleResponse;
+use Luchavez\StarterKit\Services\StarterKit;
 use Symfony\Component\Process\Process;
 
 /***** STARTER-KIT SERVICE *****/
@@ -48,13 +48,14 @@ if (! function_exists('starter_kit')) {
 
 if (! function_exists('custom_response')) {
     /**
-     * @param string|null $message
-     * @param mixed|null $data
-     * @param int $code
+     * @param  string|null  $message
+     * @param  mixed|null  $data
+     * @param  int  $code
      * @return SimpleResponse
+     *
      * @deprecated
      */
-    function custom_response(?string $message = null, mixed $data = null, int $code = 200): SimpleResponse
+    function custom_response(string $message = null, mixed $data = null, int $code = 200): SimpleResponse
     {
         return resolve('simple-response', func_get_args());
     }
@@ -62,13 +63,14 @@ if (! function_exists('custom_response')) {
 
 if (! function_exists('customResponse')) {
     /**
-     * @param string|null $message
-     * @param mixed|null $data
-     * @param int $code
+     * @param  string|null  $message
+     * @param  mixed|null  $data
+     * @param  int  $code
      * @return SimpleResponse
+     *
      * @deprecated
      */
-    function customResponse(?string $message = null, mixed $data = null, int $code = 200): SimpleResponse
+    function customResponse(string $message = null, mixed $data = null, int $code = 200): SimpleResponse
     {
         return custom_response($message, $data, $code);
     }
@@ -76,12 +78,12 @@ if (! function_exists('customResponse')) {
 
 if (! function_exists('simpleResponse')) {
     /**
-     * @param string|null $message
-     * @param mixed|null $data
-     * @param int $code
+     * @param  string|null  $message
+     * @param  mixed|null  $data
+     * @param  int  $code
      * @return SimpleResponse
      */
-    function simpleResponse(?string $message = null, mixed $data = null, int $code = 200): SimpleResponse
+    function simpleResponse(string $message = null, mixed $data = null, int $code = 200): SimpleResponse
     {
         return resolve('simple-response', func_get_args());
     }
@@ -89,12 +91,12 @@ if (! function_exists('simpleResponse')) {
 
 if (! function_exists('simpleResponse')) {
     /**
-     * @param string|null $message
-     * @param mixed|null $data
-     * @param int $code
+     * @param  string|null  $message
+     * @param  mixed|null  $data
+     * @param  int  $code
      * @return SimpleResponse
      */
-    function simpleResponse(?string $message = null, mixed $data = null, int $code = 200): SimpleResponse
+    function simpleResponse(string $message = null, mixed $data = null, int $code = 200): SimpleResponse
     {
         return simpleResponse($message, $data, $code);
     }
@@ -126,7 +128,7 @@ if (! function_exists('callAfterResolvingPackageDomain')) {
     /**
      * @param  Closure|null  $callable $callable
      */
-    function callAfterResolvingPackageDomain(Closure|null $callable): void
+    function callAfterResolvingPackageDomain(?Closure $callable): void
     {
         callAfterResolvingService('package-domain', $callable);
     }
@@ -140,7 +142,7 @@ if (! function_exists('callAfterResolvingService')) {
      * @param  Closure|null  $callback
      * @param  array  $parameters
      */
-    function callAfterResolvingService(Closure|string $abstract, Closure|null $callback, array $parameters = []): void
+    function callAfterResolvingService(Closure|string $abstract, ?Closure $callback, array $parameters = []): void
     {
         $app = app();
 
@@ -826,7 +828,7 @@ if (! function_exists('makeProcess')) {
      */
     function makeProcess(Collection|array $arguments, string $workingDirectory = null): Process
     {
-        return  make_process($arguments, $workingDirectory);
+        return make_process($arguments, $workingDirectory);
     }
 }
 
@@ -892,7 +894,7 @@ if (! function_exists('get_contents_from_composer_json')) {
      * @param  string|null  $dot_notation_key
      * @return Collection|null
      */
-    function get_contents_from_composer_json(string $path = null, string $dot_notation_key = null): Collection|null
+    function get_contents_from_composer_json(string $path = null, string $dot_notation_key = null): ?Collection
     {
         $path = qualify_composer_json($path);
 
@@ -921,7 +923,7 @@ if (! function_exists('getContentsFromComposerJson')) {
      * @param  string|null  $dot_notation_key
      * @return Collection|null
      */
-    function getContentsFromComposerJson(string $path = null, string $dot_notation_key = null): Collection|null
+    function getContentsFromComposerJson(string $path = null, string $dot_notation_key = null): ?Collection
     {
         return get_contents_from_composer_json($path, $dot_notation_key);
     }
@@ -1059,9 +1061,9 @@ if (! function_exists('add_contents_to_env')) {
                     $title->isNotEmpty(),
                     fn (Collection $collection) => $collection->prepend(
                         $title
-                        ->start('# ')
-                        ->append("\n")
-                        ->jsonSerialize()
+                            ->start('# ')
+                            ->append("\n")
+                            ->jsonSerialize()
                     )
                 )
                 ->implode(null);
@@ -1097,7 +1099,7 @@ if (! function_exists('get_combined_key_value')) {
      * @param  string|null  $value
      * @return string
      */
-    function get_combined_key_value(string $key, string|null $value = ''): string
+    function get_combined_key_value(string $key, ?string $value = ''): string
     {
         return Str::of($value)
             ->whenContains(
@@ -1178,7 +1180,7 @@ if (! function_exists('add_provider_to_app_config')) {
 
         $search_strings = [
             ["'providers' => [", '],'], // Laravel 9 and below
-            ["'providers' => ServiceProvider::defaultProviders()->merge([", "])->toArray(),"] // Laravel 10 and above
+            ["'providers' => ServiceProvider::defaultProviders()->merge([", '])->toArray(),'], // Laravel 10 and above
         ];
 
         foreach ($search_strings as $search) {

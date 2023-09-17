@@ -24,13 +24,13 @@ interface RepositoryInterface
      * @param  mixed  $attributes
      * @return Model|null
      */
-    public function make(mixed $attributes = null): Model|null;
+    public function make(mixed $attributes = null): ?Model;
 
     /**
      * @param  mixed  $attributes
      * @return Model|null
      */
-    public function create(mixed $attributes = null): Model|null;
+    public function create(mixed $attributes = null): ?Model;
 
     /**
      * @param  int|string|array|null|Model  $id

@@ -2,8 +2,8 @@
 
 namespace Luchavez\StarterKit\Traits;
 
-use Luchavez\StarterKit\Interfaces\ProviderConsoleKernelInterface;
 use Illuminate\Console\Scheduling\Schedule;
+use Luchavez\StarterKit\Interfaces\ProviderConsoleKernelInterface;
 
 /**
  * Trait UsesProviderConsoleKernelTrait

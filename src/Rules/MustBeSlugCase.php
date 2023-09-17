@@ -17,7 +17,7 @@ class MustBeSlugCase implements Rule
      *
      * @return void
      */
-    public function __construct(protected string $separator = "-")
+    public function __construct(protected string $separator = '-')
     {
         //
     }

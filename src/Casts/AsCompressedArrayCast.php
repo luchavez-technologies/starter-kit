@@ -23,7 +23,7 @@ class AsCompressedArrayCast implements CastsAttributes
      * @param  array  $attributes
      * @return array|null
      */
-    public function get($model, string $key, $value, array $attributes): array|null
+    public function get($model, string $key, $value, array $attributes): ?array
     {
         return $value ? json_decode(gzinflate($value), true) : null;
     }

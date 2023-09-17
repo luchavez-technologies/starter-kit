@@ -116,6 +116,7 @@ class ModelUsedScope implements Scope
             $builder->withoutGlobalScope($this)->where(function (Builder $q) use ($column) {
                 $q->whereNull($column)->orWhere($column, '>', 0);
             });
+
             return $builder;
         });
     }

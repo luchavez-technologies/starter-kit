@@ -2,8 +2,8 @@
 
 namespace Luchavez\StarterKit\Traits;
 
-use Luchavez\StarterKit\Services\StarterKit;
 use Illuminate\Support\Collection;
+use Luchavez\StarterKit\Services\StarterKit;
 
 /**
  * Trait UsesProviderStarterKitTrait

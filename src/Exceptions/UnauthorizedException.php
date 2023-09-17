@@ -12,7 +12,6 @@ use JetBrains\PhpStorm\Pure;
  * @author James Carlo Luchavez <jamescarloluchavez@gmail.com>
  *
  * @since  2021-11-09
- *
  * @deprecated
  */
 class UnauthorizedException extends Exception

@@ -2,12 +2,12 @@
 
 namespace Luchavez\StarterKit\Abstracts;
 
-use Luchavez\StarterKit\Traits\UsesDataParsingTrait;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use JetBrains\PhpStorm\NoReturn;
 use JsonSerializable;
+use Luchavez\StarterKit\Traits\UsesDataParsingTrait;
 
 /**
  * Class BaseJsonSerializable
@@ -27,7 +27,7 @@ abstract class BaseJsonSerializable implements JsonSerializable
      * @param  mixed  $data
      * @param  string|null  $key
      */
-    public function __construct(mixed $data = [], ?string $key = null)
+    public function __construct(mixed $data = [], string $key = null)
     {
         $this->setOriginalData($data, $key);
     }
@@ -45,7 +45,7 @@ abstract class BaseJsonSerializable implements JsonSerializable
      * @param  string|null  $key
      * @return static
      */
-    public static function from(mixed $data = [], ?string $key = null): static
+    public static function from(mixed $data = [], string $key = null): static
     {
         return new static($data, $key);
     }
@@ -55,7 +55,7 @@ abstract class BaseJsonSerializable implements JsonSerializable
      * @param  string|null  $key
      * @return void
      */
-    public function mergeDataToFields(mixed $data = [], ?string $key = null): void
+    public function mergeDataToFields(mixed $data = [], string $key = null): void
     {
         $data = $this->parse($data, $key);
 
@@ -76,8 +76,7 @@ abstract class BaseJsonSerializable implements JsonSerializable
                 $method_field = $method.'Field';
                 if (method_exists($this, $method_field)) {
                     $this->$method_field($array[$value]);
-                }
-                else if (method_exists($this, $method)) {
+                } elseif (method_exists($this, $method)) {
                     $this->$method($array[$value]);
                 } else {
                     $this->$value = $array[$value];
@@ -92,7 +91,7 @@ abstract class BaseJsonSerializable implements JsonSerializable
      * @param  mixed  $original_data
      * @param  string|null  $key
      */
-    public function setOriginalData(mixed $original_data, ?string $key = null): void
+    public function setOriginalData(mixed $original_data, string $key = null): void
     {
         $this->original_data = $original_data;
 

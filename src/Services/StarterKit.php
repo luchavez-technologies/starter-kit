@@ -3,7 +3,6 @@
 namespace Luchavez\StarterKit\Services;
 
 use Closure;
-use Luchavez\StarterKit\Data\ServiceProviderData;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Arr;
@@ -12,6 +11,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use Luchavez\StarterKit\Data\ServiceProviderData;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**
@@ -207,9 +207,9 @@ class StarterKit
                     self::OBSERVERS_DIR => collect_classes_from_path(
                         $path,
                         Str::of($directory)
-                        ->singular()
-                        ->studly()
-                        ->jsonSerialize()
+                            ->singular()
+                            ->studly()
+                            ->jsonSerialize()
                     )->toArray(),
 
                     self::CONFIG_DIR,
@@ -512,7 +512,7 @@ class StarterKit
      * @param  string  $model_name
      * @return string|null
      */
-    public function getMorphMapKey(string $model_name): string|null
+    public function getMorphMapKey(string $model_name): ?string
     {
         if (is_eloquent_model($model_name)) {
             return $this->getMorphMap()->mapWithKeys(fn ($item, $key) => [$item => $key])->get($model_name);

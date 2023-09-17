@@ -56,7 +56,7 @@ trait ModelUsedTrait
     /***** OTHER FUNCTIONS *****/
 
     /**
-     * @param int $amount
+     * @param  int  $amount
      * @return bool
      */
     public function use(int $amount = 1): bool
@@ -71,7 +71,7 @@ trait ModelUsedTrait
     }
 
     /**
-     * @param int $amount
+     * @param  int  $amount
      * @return bool
      */
     public function unuse(int $amount = 1): bool
