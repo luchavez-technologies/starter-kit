@@ -43,6 +43,8 @@ class StarterKitServiceProvider extends ServiceProvider implements ProviderHttpK
         'SK_SENTRY_TEST_API_ENABLED' => false,
         'SK_CHANGE_LOCALE_KEY' => 'lang',
         'SK_CHANGE_LOCALE_ENABLED' => true,
+        'SK_DISABLER_REQUIRED' => false,
+        'SK_DISABLE_REASON_REQUIRED' => false,
     ];
 
     /**
@@ -75,21 +77,33 @@ class StarterKitServiceProvider extends ServiceProvider implements ProviderHttpK
         }
 
         // Register custom migration functions
-        Blueprint::macro('expires', function (string $column = 'expires_at') {
+        Blueprint::macro('expires', function () {
+            $column = config('starter-kit.columns.expires.column');
             $this->timestamp($column)->index('sk_'.$column)->nullable();
         });
 
-        Blueprint::macro('disables', function (string $column = 'disabled_at') {
-            $this->timestamp($column)->index('sk_'.$column)->nullable();
-        });
-
-        Blueprint::macro('owned', function (string $column = 'owner_id', bool $nullable = false) {
+        Blueprint::macro('disables', function () {
+            $column = config('starter-kit.columns.disables.column');
+            $disabler_column = config('starter-kit.columns.disables.disabler_column');
+            $disable_reason = config('starter-kit.columns.disables.disable_reason_column');
             $model = starterKit()->getUserModel();
             $table = starterKit()->getUserQueryBuilder()->getModel()->getTable();
-            $this->foreignIdFor($model, $column)->nullable($nullable)->constrained($table);
+
+            $this->timestamp($column)->index('sk_'.$column)->nullable();
+            $this->foreignIdFor($model, $disabler_column)->nullable()->constrained($table);
+            $this->text($disable_reason)->nullable();
         });
 
-        Blueprint::macro('usage', function (string $column = 'usage_left') {
+        Blueprint::macro('owned', function () {
+            $column = config('starter-kit.columns.owned.column');
+            $model = starterKit()->getUserModel();
+            $table = starterKit()->getUserQueryBuilder()->getModel()->getTable();
+
+            $this->foreignIdFor($model, $column)->nullable()->constrained($table);
+        });
+
+        Blueprint::macro('usage', function () {
+            $column = config('starter-kit.columns.usage.column');
             $this->unsignedTinyInteger($column)->index('sk_'.$column)->nullable();
         });
     }

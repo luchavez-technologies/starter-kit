@@ -13,4 +13,22 @@ return [
         'enabled' => env('SK_CHANGE_LOCALE_ENABLED', true),
         'key' => env('SK_CHANGE_LOCALE_KEY', 'lang'),
     ],
+    'columns' => [
+        'expires' => [
+            'column' => 'expires_at',
+        ],
+        'disables' => [
+            'column' => 'disabled_at',
+            'disabler_required' => env('SK_DISABLER_REQUIRED', false),
+            'disabler_column' => 'disabler_id',
+            'disable_reason_required' => env('SK_DISABLE_REASON_REQUIRED', false),
+            'disable_reason_column' => 'disable_reason',
+        ],
+        'owned' => [
+            'column' => 'owner_id',
+        ],
+        'usage' => [
+            'column' => 'usage_left',
+        ],
+    ],
 ];

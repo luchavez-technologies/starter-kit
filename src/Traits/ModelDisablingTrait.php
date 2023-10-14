@@ -3,6 +3,10 @@
 namespace Luchavez\StarterKit\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Foundation\Auth\User;
+use Luchavez\StarterKit\Exceptions\DisableReasonRequiredException;
+use Luchavez\StarterKit\Exceptions\DisablerRequiredException;
 use Luchavez\StarterKit\Scopes\ModelDisablingScope;
 
 /**
@@ -45,7 +49,7 @@ trait ModelDisablingTrait
      */
     public static function getDisabledAtColumn(): string
     {
-        return defined('static::DISABLED_AT') ? static::DISABLED_AT : 'disabled_at';
+        return config('starter-kit.columns.disables.column');
     }
 
     /**
@@ -55,7 +59,59 @@ trait ModelDisablingTrait
      */
     public function getQualifiedDisabledAtColumn(): string
     {
-        return $this->qualifyColumn($this->getDisabledAtColumn());
+        return $this->qualifyColumn(self::getDisabledAtColumn());
+    }
+
+    /**
+     * Get the name of the "disabler id" column.
+     *
+     * @return string
+     */
+    public static function getDisablerIdColumn(): string
+    {
+        return config('starter-kit.columns.disables.disabler_column');
+    }
+
+    /**
+     * Get the fully qualified "disabler id" column.
+     *
+     * @return string
+     */
+    public function getQualifiedDisablerIdColumn(): string
+    {
+        return $this->qualifyColumn(self::getDisablerIdColumn());
+    }
+
+    /**
+     * Get the name of the "disable reason" column.
+     *
+     * @return string
+     */
+    public static function getDisableReasonColumn(): string
+    {
+        return config('starter-kit.columns.disables.disable_reason_column');
+    }
+
+    /**
+     * Get the fully qualified "disable reason" column.
+     *
+     * @return string
+     */
+    public function getQualifiedDisableReasonColumn(): string
+    {
+        return $this->qualifyColumn(self::getDisableReasonColumn());
+    }
+
+    /***** RELATIONSHIPS *****/
+
+    /**
+     * @return BelongsTo
+     */
+    public function disabler(): BelongsTo
+    {
+        $model = starterKit()->getUserModel();
+
+        return $this->belongsTo($model, self::getDisablerIdColumn());
     }
 
     /***** ACCESSORS *****/
@@ -73,12 +129,29 @@ trait ModelDisablingTrait
     /***** OTHER FUNCTIONS *****/
 
     /**
+     * @param  string|null  $reason
+     * @param  User|null  $disabler
      * @return bool
+     *
+     * @throws DisablerRequiredException|DisableReasonRequiredException
      */
-    public function disable(): bool
+    public function disable(string $reason = null, User $disabler = null): bool
     {
-        $column = self::getDisabledAtColumn();
-        $this->$column = now();
+        $disabler = $disabler ?? auth()->user();
+
+        if (is_null($disabler) && config('starter-kit.columns.disables.disabler_required')) {
+            throw new DisablerRequiredException();
+        } else {
+            $this->{self::getDisablerIdColumn()} = $disabler?->getKey();
+        }
+
+        if (is_null($reason) && config('starter-kit.columns.disables.disable_reason_required')) {
+            throw new DisableReasonRequiredException();
+        } else {
+            $this->{self::getDisableReasonColumn()} = $reason;
+        }
+
+        $this->{self::getDisabledAtColumn()} = $this->freshTimestampString();
 
         return $this->save();
     }
@@ -88,18 +161,21 @@ trait ModelDisablingTrait
      */
     public function enable(): bool
     {
-        $column = self::getDisabledAtColumn();
-        $this->$column = null;
+        $this->{self::getDisabledAtColumn()} = null;
+        $this->{self::getDisablerIdColumn()} = null;
+        $this->{self::getDisableReasonColumn()} = null;
 
         return $this->save();
     }
 
     /**
      * @return mixed
+     *
+     * @throws DisableReasonRequiredException|DisablerRequiredException
      */
-    public function disableQuietly(): bool
+    public function disableQuietly(string $reason = null, User $disabler = null): bool
     {
-        return static::withoutEvents(fn () => $this->disable());
+        return static::withoutEvents(fn () => $this->disable($reason, $disabler));
     }
 
     /**
