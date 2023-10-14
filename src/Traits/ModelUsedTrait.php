@@ -40,7 +40,7 @@ trait ModelUsedTrait
      */
     public static function getUsageLeftColumn(): string
     {
-        return defined('static::USAGE_LEFT') ? static::USAGE_LEFT : 'usage_left';
+        return config('starter-kit.columns.usage.column');
     }
 
     /**
