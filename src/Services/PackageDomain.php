@@ -2,7 +2,6 @@
 
 namespace Luchavez\StarterKit\Services;
 
-use Exception;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Foundation\CachesConfiguration;
 use Illuminate\Contracts\Foundation\CachesRoutes;
@@ -195,9 +194,8 @@ class PackageDomain
     {
         if ($this->existing_paths?->has(StarterKit::HELPERS_DIR)) {
             $this->starter_kit->getHelpers($this->provider_data->package, $this->provider_data->domain)
-                ->each(function ($item) {
-                    file_exists($item['path']) && require $item['path'];
-                });
+                ?->filter(fn ($item) => file_exists($item['path']))
+                ->each(fn ($item) => require $item['path']);
         }
 
         return $this;
@@ -217,19 +215,8 @@ class PackageDomain
             ! ($this->app instanceof CachesConfiguration && $this->app->configurationIsCached())
         ) {
             $this->starter_kit->getConfigs($this->provider_data->package, $this->provider_data->domain)
-                ->each(function ($item) {
-                    $path = $item['path'];
-
-                    if (! file_exists($path)) {
-                        return;
-                    }
-
-                    $key = $item['name'];
-                    $this->config->set($key, array_merge(
-                        require $path,
-                        $this->config->get($key, [])
-                    ));
-                });
+                ?->filter(fn ($item) => file_exists($item['path']))
+                ->each(fn ($item) => $this->config->set($item['name'], array_merge(require $item['path'], $this->config->get($item['name'], []))));
         }
 
         return $this;
@@ -245,11 +232,9 @@ class PackageDomain
     protected function bootMigrations(): static
     {
         if ($this->existing_paths?->has(StarterKit::MIGRATIONS_DIR)) {
-            $paths = $this->starter_kit->getMigrationsPath($this->provider_data->package, $this->provider_data->domain);
-
-            $paths->each(function ($path) {
-                file_exists($path) && $this->migrator->path($path);
-            });
+            $this->starter_kit->getMigrationsPath($this->provider_data->package, $this->provider_data->domain)
+                ?->filter(fn ($path) => file_exists($path))
+                ->each(fn ($path) => $this->migrator->path($path));
         }
 
         return $this;
@@ -264,9 +249,10 @@ class PackageDomain
      */
     protected function registerTranslations(): static
     {
-        if ($this->existing_paths?->has(StarterKit::LANG_DIR)) {
-            $paths = $this->starter_kit->getTranslations($this->provider_data->package, $this->provider_data->domain);
-
+        if (
+            $this->existing_paths?->has(StarterKit::LANG_DIR) &&
+            $paths = $this->starter_kit->getTranslations($this->provider_data->package, $this->provider_data->domain)
+        ) {
             $namespace = trim($this->provider_data->package.$this->provider_data->getDecodedDomain(), '/');
 
             // Register Short Keys
@@ -290,7 +276,7 @@ class PackageDomain
     {
         if ($this->existing_paths?->has(StarterKit::OBSERVERS_DIR)) {
             $this->starter_kit->getObservers($this->provider_data->package, $this->provider_data->domain, $this->getObserverMap())
-                ->each(function ($model, $observer) {
+                ?->each(function ($model, $observer) {
                     if ($model instanceof Collection) {
                         $model = $model->first();
                     }
@@ -322,7 +308,7 @@ class PackageDomain
                     }
                     try {
                         Gate::policy($model, $policy);
-                    } catch (Exception) {
+                    } catch (Throwable) {
                         //
                     }
                 });
@@ -342,7 +328,7 @@ class PackageDomain
     {
         if ($this->existing_paths?->has(StarterKit::REPOSITORIES_DIR)) {
             $this->starter_kit->getRepositories($this->provider_data->package, $this->provider_data->domain, $this->getRepositoryMap())
-                ->each(function ($model, $repository) {
+                ?->each(function ($model, $repository) {
                     if ($model instanceof Collection) {
                         $model = $model->first();
                     }
@@ -351,7 +337,7 @@ class PackageDomain
                             ->when($repository)
                             ->needs(QueryBuilder::class)
                             ->give(fn () => QueryBuilder::for($model));
-                    } catch (Exception) {
+                    } catch (Throwable) {
                         //
                     }
                 });
