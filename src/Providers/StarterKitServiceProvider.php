@@ -90,7 +90,7 @@ class StarterKitServiceProvider extends ServiceProvider implements ProviderHttpK
             $table = starterKit()->getUserQueryBuilder()->getModel()->getTable();
 
             $this->timestamp($column)->index('sk_'.$column)->nullable();
-            $this->foreignIdFor($model, $disabler_column)->nullable()->constrained($table);
+            $this->foreignIdFor($model, $disabler_column)->nullable()->constrained($table)->nullOnDelete();
             $this->text($disable_reason)->nullable();
         });
 
@@ -99,7 +99,7 @@ class StarterKitServiceProvider extends ServiceProvider implements ProviderHttpK
             $model = starterKit()->getUserModel();
             $table = starterKit()->getUserQueryBuilder()->getModel()->getTable();
 
-            $this->foreignIdFor($model, $column)->nullable()->constrained($table);
+            $this->foreignIdFor($model, $column)->nullable()->constrained($table)->nullOnDelete();
         });
 
         Blueprint::macro('usage', function () {
