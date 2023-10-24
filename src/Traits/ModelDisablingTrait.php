@@ -49,7 +49,7 @@ trait ModelDisablingTrait
      */
     public static function getDisabledAtColumn(): string
     {
-        return config('starter-kit.columns.disables.column');
+        return defined('static::DISABLED_AT') ? static::DISABLED_AT : config('starter-kit.columns.disables.column');
     }
 
     /**
@@ -69,7 +69,7 @@ trait ModelDisablingTrait
      */
     public static function getDisablerIdColumn(): string
     {
-        return config('starter-kit.columns.disables.disabler_column');
+        return defined('static::DISABLER_ID') ? static::DISABLER_ID : config('starter-kit.columns.disables.disabler_column');
     }
 
     /**
@@ -89,7 +89,7 @@ trait ModelDisablingTrait
      */
     public static function getDisableReasonColumn(): string
     {
-        return config('starter-kit.columns.disables.disable_reason_column');
+        return defined('static::DISABLE_REASON') ? static::DISABLE_REASON : config('starter-kit.columns.disables.disable_reason_column');
     }
 
     /**

@@ -33,7 +33,7 @@ trait ModelOwnedTrait
      */
     public static function getOwnerIdColumn(): string
     {
-        return config('starter-kit.columns.owned.column');
+        return defined('static::OWNER_ID') ? static::OWNER_ID : config('starter-kit.columns.owned.column');
     }
 
     /**
