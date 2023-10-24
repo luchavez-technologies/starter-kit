@@ -46,7 +46,7 @@ trait ModelExpiringTrait
      */
     public static function getExpiresAtColumn(): string
     {
-        return config('starter-kit.columns.expires.column');
+        return defined('static::EXPIRES_AT') ? static::EXPIRES_AT : config('starter-kit.columns.expires.column');
     }
 
     /**

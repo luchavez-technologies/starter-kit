@@ -9,6 +9,8 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Application;
 use Illuminate\Routing\Router;
 use Luchavez\StarterKit\Abstracts\BaseStarterKitServiceProvider as ServiceProvider;
+use Luchavez\StarterKit\Enums\OnDeleteAction;
+use Luchavez\StarterKit\Enums\OnUpdateAction;
 use Luchavez\StarterKit\Exceptions\Handler;
 use Luchavez\StarterKit\Http\Middleware\ChangeAppLocaleMiddleware;
 use Luchavez\StarterKit\Interfaces\ProviderHttpKernelInterface;
@@ -77,34 +79,64 @@ class StarterKitServiceProvider extends ServiceProvider implements ProviderHttpK
         }
 
         // Register custom migration functions
-        Blueprint::macro('expires', function () {
-            $column = config('starter-kit.columns.expires.column');
+        Blueprint::macro('expires', function (
+            string $column = null
+        ) {
+            $column ??= config('starter-kit.columns.expires.column');
             $this->timestamp($column)->index('sk_'.$column)->nullable();
         });
 
-        Blueprint::macro('disables', function () {
-            $column = config('starter-kit.columns.disables.column');
-            $disabler_column = config('starter-kit.columns.disables.disabler_column');
-            $disable_reason = config('starter-kit.columns.disables.disable_reason_column');
+        Blueprint::macro('disables', function (
+            string $column = null,
+            string $disabler_column = null,
+            string $disable_reason = null,
+            OnDeleteAction $on_delete = null,
+            OnUpdateAction $on_update = null
+        ) {
+            $column ??= config('starter-kit.columns.disables.column');
+            $disabler_column ??= config('starter-kit.columns.disables.disabler_column');
+            $disable_reason ??= config('starter-kit.columns.disables.disable_reason_column');
+            $on_delete ??= config('starter-kit.columns.disables.on_delete');
+            $on_update ??= config('starter-kit.columns.disables.on_update');
+
             $model = starterKit()->getUserModel();
             $table = starterKit()->getUserQueryBuilder()->getModel()->getTable();
 
             $this->timestamp($column)->index('sk_'.$column)->nullable();
-            $this->foreignIdFor($model, $disabler_column)->nullable()->constrained($table)->nullOnDelete();
+            $this->foreignIdFor($model, $disabler_column)
+                ->nullable()
+                ->constrained($table)
+                ->onUpdate($on_update->value)
+                ->onDelete($on_delete->value);
             $this->text($disable_reason)->nullable();
         });
 
-        Blueprint::macro('owned', function () {
-            $column = config('starter-kit.columns.owned.column');
+        Blueprint::macro('owned', function (
+            string $column = null,
+            OnDeleteAction $on_delete = null,
+            OnUpdateAction $on_update = null
+        ) {
+            $column ??= config('starter-kit.columns.owned.column');
+            $on_delete ??= config('starter-kit.columns.owned.on_delete');
+            $on_update ??= config('starter-kit.columns.owned.on_update');
+
             $model = starterKit()->getUserModel();
             $table = starterKit()->getUserQueryBuilder()->getModel()->getTable();
 
-            $this->foreignIdFor($model, $column)->nullable()->constrained($table)->nullOnDelete();
+            $this->foreignIdFor($model, $column)
+                ->nullable()
+                ->constrained($table)
+                ->onUpdate($on_update->value)
+                ->onDelete($on_delete->value);
         });
 
-        Blueprint::macro('usage', function () {
-            $column = config('starter-kit.columns.usage.column');
-            $this->unsignedTinyInteger($column)->index('sk_'.$column)->nullable();
+        Blueprint::macro('usage', function (
+            string $column = null,
+            int $default = null,
+        ) {
+            $column ??= config('starter-kit.columns.usage.column');
+            $default ??= config('starter-kit.columns.usage.default');
+            $this->unsignedTinyInteger($column)->index('sk_'.$column)->nullable()->default($default);
         });
     }
 
