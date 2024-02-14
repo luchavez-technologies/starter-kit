@@ -41,22 +41,6 @@ class Handler extends ExceptionHandler
     ];
 
     /**
-     * Register the exception handling callbacks for the application.
-     */
-    public function register(): void
-    {
-        if (starterKit()->isSentryEnabled()) {
-            $this->reportable(
-                static function (Throwable $e) {
-                    if (app()->bound('sentry')) {
-                        app('sentry')->captureException($e);
-                    }
-                }
-            );
-        }
-    }
-
-    /**
      * @param  Request  $request
      * @param  Throwable  $e
      * @return Response|\Symfony\Component\HttpFoundation\JsonResponse

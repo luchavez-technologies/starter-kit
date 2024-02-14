@@ -85,7 +85,7 @@ trait HasTaggableCacheTrait
      * @param  Closure|DateTimeInterface|DateInterval|int|null  $ttl
      * @return mixed
      */
-    protected function getCache(array $tags, string $key, Closure $closure, bool $rehydrate = false, Closure|DateTimeInterface|DateInterval|int $ttl = null): mixed
+    protected function getCache(array $tags, string $key, Closure $closure, bool $rehydrate = false, Closure|DateTimeInterface|DateInterval|int|null $ttl = null): mixed
     {
         $tags = $this->getTags(...$tags);
 

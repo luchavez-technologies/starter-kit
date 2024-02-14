@@ -135,7 +135,7 @@ trait ModelDisablingTrait
      *
      * @throws DisablerRequiredException|DisableReasonRequiredException
      */
-    public function disable(string $reason = null, User $disabler = null): bool
+    public function disable(?string $reason = null, ?User $disabler = null): bool
     {
         $disabler = $disabler ?? auth()->user();
 
@@ -173,7 +173,7 @@ trait ModelDisablingTrait
      *
      * @throws DisableReasonRequiredException|DisablerRequiredException
      */
-    public function disableQuietly(string $reason = null, User $disabler = null): bool
+    public function disableQuietly(?string $reason = null, ?User $disabler = null): bool
     {
         return static::withoutEvents(fn () => $this->disable($reason, $disabler));
     }

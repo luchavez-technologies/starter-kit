@@ -70,7 +70,7 @@ class ModelOwnedScope implements Scope
      */
     protected function addOwned(Builder $builder): void
     {
-        $builder->macro('owned', function (Builder $builder, User|bool $owner = null) {
+        $builder->macro('owned', function (Builder $builder, User|bool|null $owner = null) {
             if (is_null($owner) && is_null($owner = auth()->user())) {
                 return $builder;
             }

@@ -85,7 +85,7 @@ class StarterKit
      * @param  string|null  $domain
      * @return Collection<ServiceProvider>
      */
-    public function getProvidersFromList(string $package = null, string $domain = null): Collection
+    public function getProvidersFromList(?string $package = null, ?string $domain = null): Collection
     {
         return $this->getProviders()
             ->where('package', $package)
@@ -115,7 +115,7 @@ class StarterKit
      * @param  string|null  $domain
      * @return Collection
      */
-    public function getPaths(string $package = null, string $domain = null): Collection
+    public function getPaths(?string $package = null, ?string $domain = null): Collection
     {
         $paths = collect($this->paths);
 
@@ -240,7 +240,7 @@ class StarterKit
      * @param  string|null  $dot_notation
      * @return Collection|null
      */
-    public function getFromPaths(string $package = null, string $domain = null, string $dot_notation = null): ?Collection
+    public function getFromPaths(?string $package = null, ?string $domain = null, ?string $dot_notation = null): ?Collection
     {
         if ($value = Arr::get($this->getPaths($package, $domain), $dot_notation)) {
             return collect($value);
@@ -255,7 +255,7 @@ class StarterKit
      * @param  array  $only
      * @return Collection|null
      */
-    public function getPathsOnly(string $package = null, string $domain = null, array $only = []): ?Collection
+    public function getPathsOnly(?string $package = null, ?string $domain = null, array $only = []): ?Collection
     {
         $paths = $this->getFromPaths($package, $domain, 'directories')?->map(fn ($item) => $item['path']);
 
@@ -266,7 +266,7 @@ class StarterKit
      * @param  string|null  $package
      * @return Collection|null
      */
-    public function getDomains(string $package = null): ?Collection
+    public function getDomains(?string $package = null): ?Collection
     {
         return $this->getFromPaths($package, null, self::DOMAINS_DIR)?->map(fn ($value) => $value['path']);
     }
@@ -292,7 +292,7 @@ class StarterKit
      * @param  string|null  $domain
      * @return Collection|null
      */
-    public function getConfigs(string $package = null, string $domain = null): ?Collection
+    public function getConfigs(?string $package = null, ?string $domain = null): ?Collection
     {
         return $this->getFromPaths($package, $domain, 'directories.'.self::CONFIG_DIR.'.files');
     }
@@ -302,7 +302,7 @@ class StarterKit
      * @param  string|null  $domain
      * @return Collection|null
      */
-    public function getMigrationsPath(string $package = null, string $domain = null): ?Collection
+    public function getMigrationsPath(?string $package = null, ?string $domain = null): ?Collection
     {
         return $this->getFromPaths($package, $domain, 'directories.'.self::MIGRATIONS_DIR.'.path');
     }
@@ -312,7 +312,7 @@ class StarterKit
      * @param  string|null  $domain
      * @return Collection|null
      */
-    public function getHelpers(string $package = null, string $domain = null): ?Collection
+    public function getHelpers(?string $package = null, ?string $domain = null): ?Collection
     {
         return $this->getFromPaths($package, $domain, 'directories.'.self::HELPERS_DIR.'.files');
     }
@@ -322,7 +322,7 @@ class StarterKit
      * @param  string|null  $domain
      * @return Collection|null
      */
-    public function getRoutes(string $package = null, string $domain = null): ?Collection
+    public function getRoutes(?string $package = null, ?string $domain = null): ?Collection
     {
         return $this->getFromPaths($package, $domain, 'directories.'.self::ROUTES_DIR.'.files');
     }
@@ -332,7 +332,7 @@ class StarterKit
      * @param  string|null  $domain
      * @return string|null
      */
-    public function getTranslations(string $package = null, string $domain = null): ?string
+    public function getTranslations(?string $package = null, ?string $domain = null): ?string
     {
         return $this->getFromPaths($package, $domain, 'directories.'.self::LANG_DIR)->get('path');
     }
@@ -342,7 +342,7 @@ class StarterKit
      * @param  string|null  $domain
      * @return Collection|null
      */
-    public function getModels(string $package = null, string $domain = null): ?Collection
+    public function getModels(?string $package = null, ?string $domain = null): ?Collection
     {
         return $this->getFromPaths($package, $domain, 'directories.'.self::MODELS_DIR.'.files');
     }
@@ -352,7 +352,7 @@ class StarterKit
      * @param  string|null  $domain
      * @return Collection|null
      */
-    public function getPossibleModels(string $package = null, string $domain = null): ?Collection
+    public function getPossibleModels(?string $package = null, ?string $domain = null): ?Collection
     {
         $possibleModels = collect();
 
@@ -384,7 +384,7 @@ class StarterKit
      * @param  array  $map
      * @return Collection|null
      */
-    public function getModelRelatedFiles(string $directory, string $package = null, string $domain = null, array $map = []): ?Collection
+    public function getModelRelatedFiles(string $directory, ?string $package = null, ?string $domain = null, array $map = []): ?Collection
     {
         if ($files = $this->getFromPaths($package, $domain, 'directories.'.$directory.'.files')) {
             $files = collect($files)->mapWithKeys(fn ($item, $key) => [$item => $key]);
@@ -410,7 +410,7 @@ class StarterKit
      * @param  array  $policy_map
      * @return Collection|null
      */
-    public function getPolicies(string $package = null, string $domain = null, array $policy_map = []): ?Collection
+    public function getPolicies(?string $package = null, ?string $domain = null, array $policy_map = []): ?Collection
     {
         return $this->getModelRelatedFiles(self::POLICIES_DIR, $package, $domain, $policy_map);
     }
@@ -421,7 +421,7 @@ class StarterKit
      * @param  array  $observer_map
      * @return Collection|null
      */
-    public function getObservers(string $package = null, string $domain = null, array $observer_map = []): ?Collection
+    public function getObservers(?string $package = null, ?string $domain = null, array $observer_map = []): ?Collection
     {
         return $this->getModelRelatedFiles(self::OBSERVERS_DIR, $package, $domain, $observer_map);
     }
@@ -432,7 +432,7 @@ class StarterKit
      * @param  array  $repository_map
      * @return Collection|null
      */
-    public function getRepositories(string $package = null, string $domain = null, array $repository_map = []): ?Collection
+    public function getRepositories(?string $package = null, ?string $domain = null, array $repository_map = []): ?Collection
     {
         return $this->getModelRelatedFiles(self::REPOSITORIES_DIR, $package, $domain, $repository_map);
     }
@@ -443,7 +443,7 @@ class StarterKit
      * @param  string|object|null  $exception_class
      * @return Collection|Closure|callable|null
      */
-    public function getExceptionRenders(string|object $exception_class = null): Collection|Closure|callable|null
+    public function getExceptionRenders(string|object|null $exception_class = null): Collection|Closure|callable|null
     {
         $result = collect($this->exception_renders);
 
@@ -537,24 +537,6 @@ class StarterKit
         }
 
         return $middleware;
-    }
-
-    /***** SENTRY RELATED *****/
-
-    /**
-     * @return bool
-     */
-    public function isSentryEnabled(): bool
-    {
-        return config('starter-kit.sentry_enabled');
-    }
-
-    /**
-     * @return bool
-     */
-    public function isSentryTestApiEnabled(): bool
-    {
-        return ! App::isProduction() && config('starter-kit.sentry_test_api_enabled');
     }
 
     /***** OTHER METHODS *****/

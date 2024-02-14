@@ -30,8 +30,6 @@ php artisan bg:env:publish --all
 |--------------------------------|-----------------------------------------------------------------------------|
 | `illuminate/support`           | [~8 or ~9 or ~10](https://packagist.org/packages/illuminate/support)        |
 | `composer/composer`            | [^2.5](https://packagist.org/packages/composer/composer)                    |
-| `laravel/telescope`            | [^4.15](https://packagist.org/packages/laravel/telescope)                   |
-| `sentry/sentry-laravel`        | [^3.6](https://packagist.org/packages/sentry/sentry-laravel)                |
 | `hammerstone/fast-paginate`    | [^1.0](https://packagist.org/packages/hammerstone/fast-paginate)            |
 | `spatie/laravel-query-builder` | [^5.2 or ^4.0](https://packagist.org/packages/spatie/laravel-query-builder) |
 

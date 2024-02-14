@@ -46,36 +46,6 @@ if (! function_exists('starter_kit')) {
 
 /***** SIMPLE RESPONSE SERVICE *****/
 
-if (! function_exists('custom_response')) {
-    /**
-     * @param  string|null  $message
-     * @param  mixed|null  $data
-     * @param  int  $code
-     * @return SimpleResponse
-     *
-     * @deprecated
-     */
-    function custom_response(string $message = null, mixed $data = null, int $code = 200): SimpleResponse
-    {
-        return resolve('simple-response', func_get_args());
-    }
-}
-
-if (! function_exists('customResponse')) {
-    /**
-     * @param  string|null  $message
-     * @param  mixed|null  $data
-     * @param  int  $code
-     * @return SimpleResponse
-     *
-     * @deprecated
-     */
-    function customResponse(string $message = null, mixed $data = null, int $code = 200): SimpleResponse
-    {
-        return custom_response($message, $data, $code);
-    }
-}
-
 if (! function_exists('simpleResponse')) {
     /**
      * @param  string|null  $message
@@ -83,7 +53,7 @@ if (! function_exists('simpleResponse')) {
      * @param  int  $code
      * @return SimpleResponse
      */
-    function simpleResponse(string $message = null, mixed $data = null, int $code = 200): SimpleResponse
+    function simpleResponse(?string $message = null, mixed $data = null, int $code = 200): SimpleResponse
     {
         return resolve('simple-response', func_get_args());
     }
@@ -96,7 +66,7 @@ if (! function_exists('simpleResponse')) {
      * @param  int  $code
      * @return SimpleResponse
      */
-    function simpleResponse(string $message = null, mixed $data = null, int $code = 200): SimpleResponse
+    function simpleResponse(?string $message = null, mixed $data = null, int $code = 200): SimpleResponse
     {
         return simpleResponse($message, $data, $code);
     }
@@ -485,7 +455,7 @@ if (! function_exists('collect_files_or_directories')) {
      * @return Collection|null
      */
     function collect_files_or_directories(
-        string $directory = null,
+        ?string $directory = null,
         bool $with_directories = true,
         bool $with_files = true,
         bool $prepend_directory = false
@@ -532,7 +502,7 @@ if (! function_exists('collectFilesOrDirectories')) {
      * @return Collection|null
      */
     function collectFilesOrDirectories(
-        string $directory = null,
+        ?string $directory = null,
         bool $with_directories = true,
         bool $with_files = true,
         bool $prepend_directory = false
@@ -699,7 +669,7 @@ if (! function_exists('collect_classes_from_path')) {
      * @param  string|null  $suffix
      * @return Collection|null
      */
-    function collect_classes_from_path(string $path, string $suffix = null): ?Collection
+    function collect_classes_from_path(string $path, ?string $suffix = null): ?Collection
     {
         if (! file_exists($path)) {
             return null;
@@ -724,7 +694,7 @@ if (! function_exists('collectClassesFromPath')) {
      * @param  string|null  $suffix
      * @return Collection
      */
-    function collectClassesFromPath(string $path, string $suffix = null): Collection
+    function collectClassesFromPath(string $path, ?string $suffix = null): Collection
     {
         return collect_classes_from_path($path, $suffix);
     }
@@ -746,7 +716,7 @@ if (! function_exists('is_valid_base64')) {
 
         // Decode the string in strict mode and check the results
         $decoded = base64_decode($string, true);
-        if (false === $decoded) {
+        if ($decoded === false) {
             return false;
         }
 
@@ -806,7 +776,7 @@ if (! function_exists('make_process')) {
      * @param  string|null  $workingDirectory
      * @return Process
      */
-    function make_process(Collection|array $arguments, string $workingDirectory = null): Process
+    function make_process(Collection|array $arguments, ?string $workingDirectory = null): Process
     {
         if (! $workingDirectory) {
             $workingDirectory = str_replace('\\', '/', base_path());
@@ -826,7 +796,7 @@ if (! function_exists('makeProcess')) {
      * @param  string|null  $workingDirectory
      * @return Process
      */
-    function makeProcess(Collection|array $arguments, string $workingDirectory = null): Process
+    function makeProcess(Collection|array $arguments, ?string $workingDirectory = null): Process
     {
         return make_process($arguments, $workingDirectory);
     }
@@ -894,7 +864,7 @@ if (! function_exists('get_contents_from_composer_json')) {
      * @param  string|null  $dot_notation_key
      * @return Collection|null
      */
-    function get_contents_from_composer_json(string $path = null, string $dot_notation_key = null): ?Collection
+    function get_contents_from_composer_json(?string $path = null, ?string $dot_notation_key = null): ?Collection
     {
         $path = qualify_composer_json($path);
 
@@ -923,7 +893,7 @@ if (! function_exists('getContentsFromComposerJson')) {
      * @param  string|null  $dot_notation_key
      * @return Collection|null
      */
-    function getContentsFromComposerJson(string $path = null, string $dot_notation_key = null): ?Collection
+    function getContentsFromComposerJson(?string $path = null, ?string $dot_notation_key = null): ?Collection
     {
         return get_contents_from_composer_json($path, $dot_notation_key);
     }
@@ -935,7 +905,7 @@ if (! function_exists('add_provider_to_composer_json')) {
      * @param  string|null  $path
      * @return bool
      */
-    function add_provider_to_composer_json(string $provider, string $path = null): bool
+    function add_provider_to_composer_json(string $provider, ?string $path = null): bool
     {
         // Check if app config exists or if provider is already load or if provider is already appended
         if (app()->getProvider($provider)) {
@@ -952,7 +922,7 @@ if (! function_exists('remove_provider_from_composer_json')) {
      * @param  string|null  $path
      * @return bool
      */
-    function remove_provider_from_composer_json(string $provider, string $path = null): bool
+    function remove_provider_from_composer_json(string $provider, ?string $path = null): bool
     {
         // Check if app config exists or if provider is already load or if provider is already appended
         if (! app()->getProvider($provider)) {
@@ -968,7 +938,7 @@ if (! function_exists('qualify_composer_json')) {
      * @param  string|null  $path
      * @return string
      */
-    function qualify_composer_json(string $path = null): string
+    function qualify_composer_json(?string $path = null): string
     {
         if ($path && Str::endsWith($path, 'composer.json') && file_exists($path)) {
             return $path;
@@ -994,7 +964,7 @@ if (! function_exists('qualifyComposerJson')) {
      * @param  string|null  $path
      * @return string
      */
-    function qualifyComposerJson(string $path = null): string
+    function qualifyComposerJson(?string $path = null): string
     {
         return qualify_composer_json($path);
     }
@@ -1012,7 +982,7 @@ if (! function_exists('add_contents_to_env')) {
      */
     function add_contents_to_env(
         Collection|array $contents,
-        string $title = null,
+        ?string $title = null,
         bool $override = false,
         bool $force = false
     ): bool {
@@ -1085,7 +1055,7 @@ if (! function_exists('addContentsToEnv')) {
      */
     function addContentsToEnv(
         Collection|array $contents,
-        string $title = null,
+        ?string $title = null,
         bool $override = false,
         bool $force = false
     ): bool {

@@ -101,7 +101,7 @@ class ModelDisablingScope implements Scope
      */
     protected function addDisable(Builder $builder): void
     {
-        $builder->macro('disable', function (Builder $builder, string $reason = null, User $disabler = null) {
+        $builder->macro('disable', function (Builder $builder, ?string $reason = null, ?User $disabler = null) {
             $disabler = $disabler ?? auth()->user();
 
             if (is_null($disabler) && config('starter-kit.columns.disables.disabler_required')) {

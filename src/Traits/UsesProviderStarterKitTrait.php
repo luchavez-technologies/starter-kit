@@ -12,15 +12,15 @@ use Luchavez\StarterKit\Services\StarterKit;
  */
 trait UsesProviderStarterKitTrait
 {
+    use UsesProviderConsoleKernelTrait;
+    use UsesProviderDynamicRelationshipsTrait;
+    use UsesProviderEnvVarsTrait;
+    use UsesProviderHttpKernelTrait;
     use UsesProviderMorphMapTrait;
     use UsesProviderObserverMapTrait;
     use UsesProviderPolicyMapTrait;
     use UsesProviderRepositoryMapTrait;
-    use UsesProviderDynamicRelationshipsTrait;
-    use UsesProviderHttpKernelTrait;
-    use UsesProviderConsoleKernelTrait;
     use UsesProviderRoutesTrait;
-    use UsesProviderEnvVarsTrait;
 
     /**
      * Artisan Commands
