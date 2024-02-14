@@ -41,8 +41,6 @@ class StarterKitServiceProvider extends ServiceProvider implements ProviderHttpK
         'SK_OVERRIDE_EXCEPTION_HANDLER' => false,
         'SK_ENFORCE_MORPH_MAP' => false,
         'SK_VERIFY_SSL' => true,
-        'SK_SENTRY_ENABLED' => false,
-        'SK_SENTRY_TEST_API_ENABLED' => false,
         'SK_CHANGE_LOCALE_KEY' => 'lang',
         'SK_CHANGE_LOCALE_ENABLED' => true,
         'SK_DISABLER_REQUIRED' => false,
@@ -80,18 +78,18 @@ class StarterKitServiceProvider extends ServiceProvider implements ProviderHttpK
 
         // Register custom migration functions
         Blueprint::macro('expires', function (
-            string $column = null
+            ?string $column = null
         ) {
             $column ??= config('starter-kit.columns.expires.column');
-            $this->timestamp($column)->index('sk_'.$column)->nullable();
+            $this->timestamp($column)->nullable();
         });
 
         Blueprint::macro('disables', function (
-            string $column = null,
-            string $disabler_column = null,
-            string $disable_reason = null,
-            OnDeleteAction $on_delete = null,
-            OnUpdateAction $on_update = null
+            ?string $column = null,
+            ?string $disabler_column = null,
+            ?string $disable_reason = null,
+            ?OnDeleteAction $on_delete = null,
+            ?OnUpdateAction $on_update = null
         ) {
             $column ??= config('starter-kit.columns.disables.column');
             $disabler_column ??= config('starter-kit.columns.disables.disabler_column');
@@ -102,7 +100,7 @@ class StarterKitServiceProvider extends ServiceProvider implements ProviderHttpK
             $model = starterKit()->getUserModel();
             $table = starterKit()->getUserQueryBuilder()->getModel()->getTable();
 
-            $this->timestamp($column)->index('sk_'.$column)->nullable();
+            $this->timestamp($column)->nullable();
             $this->foreignIdFor($model, $disabler_column)
                 ->nullable()
                 ->constrained($table)
@@ -112,9 +110,9 @@ class StarterKitServiceProvider extends ServiceProvider implements ProviderHttpK
         });
 
         Blueprint::macro('owned', function (
-            string $column = null,
-            OnDeleteAction $on_delete = null,
-            OnUpdateAction $on_update = null
+            ?string $column = null,
+            ?OnDeleteAction $on_delete = null,
+            ?OnUpdateAction $on_update = null
         ) {
             $column ??= config('starter-kit.columns.owned.column');
             $on_delete ??= config('starter-kit.columns.owned.on_delete');
@@ -131,12 +129,12 @@ class StarterKitServiceProvider extends ServiceProvider implements ProviderHttpK
         });
 
         Blueprint::macro('usage', function (
-            string $column = null,
-            int $default = null,
+            ?string $column = null,
+            ?int $default = null,
         ) {
             $column ??= config('starter-kit.columns.usage.column');
             $default ??= config('starter-kit.columns.usage.default');
-            $this->unsignedTinyInteger($column)->index('sk_'.$column)->nullable()->default($default);
+            $this->unsignedTinyInteger($column)->nullable()->default($default);
         });
     }
 

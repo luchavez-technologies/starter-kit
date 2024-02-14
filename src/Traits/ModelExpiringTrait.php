@@ -74,7 +74,7 @@ trait ModelExpiringTrait
      * @param  Carbon|string|null  $date_time
      * @return bool
      */
-    public function expire(Carbon|string $date_time = null): bool
+    public function expire(Carbon|string|null $date_time = null): bool
     {
         $column = self::getExpiresAtColumn();
         $this->$column = ModelExpiringScope::getExpirationDateTime($date_time);
@@ -97,7 +97,7 @@ trait ModelExpiringTrait
      * @param  Carbon|string|null  $date_time
      * @return bool
      */
-    public function expireQuietly(Carbon|string $date_time = null): bool
+    public function expireQuietly(Carbon|string|null $date_time = null): bool
     {
         return static::withoutEvents(fn () => $this->expire($date_time));
     }

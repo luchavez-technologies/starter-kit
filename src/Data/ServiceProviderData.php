@@ -47,7 +47,7 @@ class ServiceProviderData extends BaseJsonSerializable
      * @param  mixed  $data
      * @param  string|null  $key
      */
-    public function __construct(mixed $data = [], string $key = null)
+    public function __construct(mixed $data = [], ?string $key = null)
     {
         parent::__construct($data, $key);
 

@@ -31,11 +31,11 @@ use Throwable;
  */
 class PackageDomain
 {
-    use UsesProviderRoutesTrait;
     use UsesProviderMorphMapTrait;
     use UsesProviderObserverMapTrait;
     use UsesProviderPolicyMapTrait;
     use UsesProviderRepositoryMapTrait;
+    use UsesProviderRoutesTrait;
 
     /**
      * @var ServiceProvider|null
@@ -419,7 +419,7 @@ class PackageDomain
      * @param  array|null  $append_to_prefix
      * @return array
      */
-    public function getRouteApiConfiguration(array $append_to_prefix = null): array
+    public function getRouteApiConfiguration(?array $append_to_prefix = null): array
     {
         return $this->getRouteConfiguration(true, $append_to_prefix);
     }
@@ -428,7 +428,7 @@ class PackageDomain
      * @param  array|null  $append_to_prefix
      * @return array
      */
-    public function getRouteWebConfiguration(array $append_to_prefix = null): array
+    public function getRouteWebConfiguration(?array $append_to_prefix = null): array
     {
         return $this->getRouteConfiguration(false, $append_to_prefix);
     }
@@ -438,7 +438,7 @@ class PackageDomain
      * @param  array|null  $append_to_prefix
      * @return string[]
      */
-    public function getRouteConfiguration(bool $is_api, array $append_to_prefix = null): array
+    public function getRouteConfiguration(bool $is_api, ?array $append_to_prefix = null): array
     {
         $config = [
             'middleware' => $is_api ? $this->getApiMiddleware() : $this->getWebMiddleware(),

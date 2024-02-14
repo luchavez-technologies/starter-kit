@@ -83,7 +83,7 @@ abstract class BaseRepository implements RepositoryInterface
      * @param  mixed  $attributes
      * @return Model|Collection|array|null
      */
-    public function get(int|string|array|Model $id = null, mixed $attributes = null): Model|Collection|array|null
+    public function get(int|string|array|Model|null $id = null, mixed $attributes = null): Model|Collection|array|null
     {
         if ($id) {
             return $id instanceof Model ? $id : $this->builder()?->findOrFail($id);
@@ -97,7 +97,7 @@ abstract class BaseRepository implements RepositoryInterface
      * @param  mixed  $attributes
      * @return Model|Collection|array|null
      */
-    public function update(int|string|array|Model $id = null, mixed $attributes = []): Model|Collection|array|null
+    public function update(int|string|array|Model|null $id = null, mixed $attributes = []): Model|Collection|array|null
     {
         $model = $id instanceof Model ? $id : $this->get($id);
 
@@ -117,7 +117,7 @@ abstract class BaseRepository implements RepositoryInterface
      * @param  mixed  $attributes
      * @return Model|Collection|array|null
      */
-    public function delete(int|string|array|Model $id = null, mixed $attributes = null): Model|Collection|array|null
+    public function delete(int|string|array|Model|null $id = null, mixed $attributes = null): Model|Collection|array|null
     {
         if ($id instanceof Model) {
             return $id->delete() ? $id : null;
@@ -144,7 +144,7 @@ abstract class BaseRepository implements RepositoryInterface
      * @param  mixed  $attributes
      * @return Model|Collection|array|null
      */
-    public function restore(int|string|array|Model $id = null, mixed $attributes = null): Model|Collection|array|null
+    public function restore(int|string|array|Model|null $id = null, mixed $attributes = null): Model|Collection|array|null
     {
         if ($id instanceof Model && class_uses_trait($id, SoftDeletes::class)) {
             return $id->restore() ? $id : null;

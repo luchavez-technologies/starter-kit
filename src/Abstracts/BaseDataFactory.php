@@ -46,7 +46,7 @@ abstract class BaseDataFactory extends BaseJsonSerializable
      * @param  string|null  $key
      * @return Builder|Model
      */
-    public function make(mixed $data = [], string $key = null): Model|Builder
+    public function make(mixed $data = [], ?string $key = null): Model|Builder
     {
         $this->mergeDataToFields($data, $key);
 
@@ -62,7 +62,7 @@ abstract class BaseDataFactory extends BaseJsonSerializable
      * @param  string|null  $key
      * @return Model|Builder|null
      */
-    public function create(mixed $data = [], string $key = null): Model|Builder|null
+    public function create(mixed $data = [], ?string $key = null): Model|Builder|null
     {
         $model = $this->make($data, $key);
 
@@ -74,7 +74,7 @@ abstract class BaseDataFactory extends BaseJsonSerializable
      * @param  string|null  $key
      * @return Model|Builder|null
      */
-    public function firstOrNew(mixed $data = [], string $key = null): Model|Builder|null
+    public function firstOrNew(mixed $data = [], ?string $key = null): Model|Builder|null
     {
         $this->mergeDataToFields($data, $key);
 
@@ -108,7 +108,7 @@ abstract class BaseDataFactory extends BaseJsonSerializable
      * @param  string|null  $key
      * @return Model|Builder|null
      */
-    public function firstOrCreate(mixed $data = [], string $key = null): Model|Builder|null
+    public function firstOrCreate(mixed $data = [], ?string $key = null): Model|Builder|null
     {
         $model = $this->firstOrNew($data, $key);
 
@@ -120,7 +120,7 @@ abstract class BaseDataFactory extends BaseJsonSerializable
      * @param  string|null  $key
      * @return Model|Builder|null
      */
-    public function updateOrCreate(mixed $data = [], string $key = null): Model|Builder|null
+    public function updateOrCreate(mixed $data = [], ?string $key = null): Model|Builder|null
     {
         $model = $this->firstOrNew($data, $key);
 

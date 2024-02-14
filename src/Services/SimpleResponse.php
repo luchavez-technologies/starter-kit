@@ -58,7 +58,7 @@ class SimpleResponse
      * @param  mixed  $data
      * @param  int  $code
      */
-    public function __construct(string $message = null, mixed $data = null, int $code = 200)
+    public function __construct(?string $message = null, mixed $data = null, int $code = 200)
     {
         $this
             ->message($message)
