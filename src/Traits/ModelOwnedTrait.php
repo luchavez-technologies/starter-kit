@@ -18,18 +18,14 @@ trait ModelOwnedTrait
 {
     /**
      * Boot the owned trait for a model.
-     *
-     * @return void
      */
     public static function bootModelOwnedTrait(): void
     {
-        static::addGlobalScope(new ModelOwnedScope());
+        static::addGlobalScope(new ModelOwnedScope);
     }
 
     /**
      * Get the name of the "owner id" column.
-     *
-     * @return string
      */
     public static function getOwnerIdColumn(): string
     {
@@ -38,8 +34,6 @@ trait ModelOwnedTrait
 
     /**
      * Get the fully qualified "owner id" column.
-     *
-     * @return string
      */
     public function getQualifiedOwnerIdColumn(): string
     {
@@ -48,9 +42,6 @@ trait ModelOwnedTrait
 
     /***** RELATIONSHIPS *****/
 
-    /**
-     * @return BelongsTo
-     */
     public function owner(): BelongsTo
     {
         return $this->belongsTo(starterKit()->getUserModel(), self::getOwnerIdColumn());

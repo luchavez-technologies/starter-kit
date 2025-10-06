@@ -25,10 +25,6 @@ class ModelDisablingScope implements Scope
 
     /**
      * Apply the scope to a given Eloquent query builder.
-     *
-     * @param  Builder  $builder
-     * @param  Model  $model
-     * @return void
      */
     public function apply(Builder $builder, Model $model): void
     {
@@ -37,9 +33,6 @@ class ModelDisablingScope implements Scope
 
     /**
      * Extend the query builder with the needed functions.
-     *
-     * @param  Builder  $builder
-     * @return void
      */
     public function extend(Builder $builder): void
     {
@@ -50,9 +43,6 @@ class ModelDisablingScope implements Scope
 
     /**
      * Get the "disabled at" column for the builder.
-     *
-     * @param  Builder  $builder
-     * @return string
      */
     protected function getDisabledAtColumn(Builder $builder): string
     {
@@ -65,9 +55,6 @@ class ModelDisablingScope implements Scope
 
     /**
      * Get the "disabler id" column for the builder.
-     *
-     * @param  Builder  $builder
-     * @return string
      */
     protected function getDisablerIdColumn(Builder $builder): string
     {
@@ -80,9 +67,6 @@ class ModelDisablingScope implements Scope
 
     /**
      * Get the "disable reason" column for the builder.
-     *
-     * @param  Builder  $builder
-     * @return string
      */
     protected function getDisableReasonColumn(Builder $builder): string
     {
@@ -95,9 +79,6 @@ class ModelDisablingScope implements Scope
 
     /**
      * Add to disable extension to the builder.
-     *
-     * @param  Builder  $builder
-     * @return void
      */
     protected function addDisable(Builder $builder): void
     {
@@ -105,13 +86,13 @@ class ModelDisablingScope implements Scope
             $disabler = $disabler ?? auth()->user();
 
             if (is_null($disabler) && config('starter-kit.columns.disables.disabler_required')) {
-                throw new DisablerRequiredException();
+                throw new DisablerRequiredException;
             } else {
                 $attributes[$this->getDisablerIdColumn($builder)] = $disabler?->getKey();
             }
 
             if (is_null($reason) && config('starter-kit.columns.disables.disable_reason_required')) {
-                throw new DisableReasonRequiredException();
+                throw new DisableReasonRequiredException;
             } else {
                 $attributes[$this->getDisableReasonColumn($builder)] = $reason;
             }
@@ -124,9 +105,6 @@ class ModelDisablingScope implements Scope
 
     /**
      * Add the enable extension to the builder.
-     *
-     * @param  Builder  $builder
-     * @return void
      */
     protected function addEnable(Builder $builder): void
     {
@@ -143,9 +121,6 @@ class ModelDisablingScope implements Scope
 
     /**
      * Add the with-disabled extension to the builder.
-     *
-     * @param  Builder  $builder
-     * @return void
      */
     protected function addWithDisabled(Builder $builder): void
     {
@@ -160,9 +135,6 @@ class ModelDisablingScope implements Scope
 
     /**
      * Add the without-disabled extension to the builder.
-     *
-     * @param  Builder  $builder
-     * @return void
      */
     protected function addWithoutDisabled(Builder $builder): void
     {
@@ -175,9 +147,6 @@ class ModelDisablingScope implements Scope
 
     /**
      * Add the only-disabled extension to the builder.
-     *
-     * @param  Builder  $builder
-     * @return void
      */
     protected function addOnlyDisabled(Builder $builder): void
     {

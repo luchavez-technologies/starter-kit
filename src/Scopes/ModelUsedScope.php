@@ -22,10 +22,6 @@ class ModelUsedScope implements Scope
 
     /**
      * Apply the scope to a given Eloquent query builder.
-     *
-     * @param  Builder  $builder
-     * @param  Model  $model
-     * @return void
      */
     public function apply(Builder $builder, Model $model): void
     {
@@ -34,9 +30,6 @@ class ModelUsedScope implements Scope
 
     /**
      * Extend the query builder with the needed functions.
-     *
-     * @param  Builder  $builder
-     * @return void
      */
     public function extend(Builder $builder): void
     {
@@ -47,9 +40,6 @@ class ModelUsedScope implements Scope
 
     /**
      * Get the "usage left" column for the builder.
-     *
-     * @param  Builder  $builder
-     * @return string
      */
     protected function getUsageLeftColumn(Builder $builder): string
     {
@@ -62,9 +52,6 @@ class ModelUsedScope implements Scope
 
     /**
      * Add the use extension to the builder.
-     *
-     * @param  Builder  $builder
-     * @return void
      */
     protected function addUse(Builder $builder): void
     {
@@ -75,9 +62,6 @@ class ModelUsedScope implements Scope
 
     /**
      * Add the unuse extension to the builder.
-     *
-     * @param  Builder  $builder
-     * @return void
      */
     protected function addUnuse(Builder $builder): void
     {
@@ -88,9 +72,6 @@ class ModelUsedScope implements Scope
 
     /**
      * Add the with-used extension to the builder.
-     *
-     * @param  Builder  $builder
-     * @return void
      */
     protected function addWithUsed(Builder $builder): void
     {
@@ -105,9 +86,6 @@ class ModelUsedScope implements Scope
 
     /**
      * Add the without-used extension to the builder.
-     *
-     * @param  Builder  $builder
-     * @return void
      */
     protected function addWithoutUsed(Builder $builder): void
     {
@@ -123,9 +101,6 @@ class ModelUsedScope implements Scope
 
     /**
      * Add the only-used extension to the builder.
-     *
-     * @param  Builder  $builder
-     * @return void
      */
     protected function addOnlyUsed(Builder $builder): void
     {

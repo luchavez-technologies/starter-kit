@@ -7,7 +7,6 @@ return [
     'user_model' => env('SK_USER_MODEL', config('auth.providers.users.model')),
     'web_middleware' => env('SK_WEB_MIDDLEWARE', []),
     'api_middleware' => env('SK_API_MIDDLEWARE', []),
-    'override_exception_handler' => env('SK_OVERRIDE_EXCEPTION_HANDLER', false),
     'enforce_morph_map' => env('SK_ENFORCE_MORPH_MAP', true),
     'verify_ssl' => env('SK_VERIFY_SSL', true),
     'change_locale' => [

@@ -12,9 +12,6 @@ use Luchavez\StarterKit\Interfaces\ProviderConsoleKernelInterface;
  */
 trait UsesProviderConsoleKernelTrait
 {
-    /**
-     * @return void
-     */
     public function bootConsoleKernel(): void
     {
         if ($this instanceof ProviderConsoleKernelInterface) {

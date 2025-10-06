@@ -12,8 +12,6 @@ use Luchavez\StarterKit\Interfaces\ProviderDynamicRelationshipsInterface;
 trait UsesProviderDynamicRelationshipsTrait
 {
     /**
-     * @return void
-     *
      * @link   https://laravel.com/docs/8.x/eloquent-relationships#dynamic-relationships
      */
     public function bootDynamicRelationships(): void
@@ -23,9 +21,6 @@ trait UsesProviderDynamicRelationshipsTrait
         }
     }
 
-    /**
-     * @return bool
-     */
     public function isDynamicRelationshipsEnabled(): bool
     {
         return true;

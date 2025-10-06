@@ -21,9 +21,6 @@ class SimpleResponse
 {
     use UsesDataParsingTrait;
 
-    /**
-     * @var string|null
-     */
     protected ?string $message = null;
 
     /**
@@ -31,32 +28,16 @@ class SimpleResponse
      */
     protected mixed $data = null;
 
-    /**
-     * @var int
-     */
     protected int $code = 200;
 
-    /**
-     * @var bool
-     */
     protected bool $success = true;
 
-    /**
-     * @var string|null
-     */
     protected ?string $slug = null;
 
-    /**
-     * @var array
-     */
     protected array $pagination = [];
 
     /**
      * ExtendedResponse constructor.
-     *
-     * @param  string|null  $message
-     * @param  mixed  $data
-     * @param  int  $code
      */
     public function __construct(?string $message = null, mixed $data = null, int $code = 200)
     {
@@ -71,7 +52,6 @@ class SimpleResponse
     /**
      * Set status code
      *
-     * @param  int  $code
      * @return $this
      */
     public function code(int $code): SimpleResponse
@@ -86,7 +66,6 @@ class SimpleResponse
     /**
      * Generic success code
      *
-     * @param  int  $code
      * @return $this
      */
     public function success(int $code = 200): SimpleResponse
@@ -97,7 +76,6 @@ class SimpleResponse
     /**
      * Generic failure code
      *
-     * @param  int  $code
      * @return $this
      */
     public function failed(int $code = 400): SimpleResponse
@@ -141,7 +119,6 @@ class SimpleResponse
     /**
      * Set a custom slug
      *
-     * @param  string  $title
      * @param  string[]  $dictionary
      * @return $this
      */
@@ -160,8 +137,6 @@ class SimpleResponse
     /**
      * Set message
      *
-     * @param  string|null  $message
-     * @param  array  $replace
      * @return $this
      */
     public function message(?string $message, array $replace = []): SimpleResponse
@@ -181,7 +156,6 @@ class SimpleResponse
     /**
      * Set data
      *
-     * @param  mixed  $value
      * @return $this
      */
     public function data(mixed $value = null): SimpleResponse
@@ -209,8 +183,6 @@ class SimpleResponse
 
     /**
      * Generate response
-     *
-     * @return JsonResponse
      */
     public function generate(): JsonResponse
     {

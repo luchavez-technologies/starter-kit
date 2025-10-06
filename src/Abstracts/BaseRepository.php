@@ -18,51 +18,28 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 abstract class BaseRepository implements RepositoryInterface
 {
-    /**
-     * @param  QueryBuilder|null  $builder
-     */
-    public function __construct(protected ?QueryBuilder $builder = null)
-    {
-    }
+    public function __construct(protected ?QueryBuilder $builder = null) {}
 
-    /**
-     * @return QueryBuilder|null
-     */
     public function builder(): ?QueryBuilder
     {
         return $this->builder?->clone();
     }
 
-    /**
-     * @return QueryBuilder|null
-     */
     public function getBuilder(): ?QueryBuilder
     {
         return $this->builder();
     }
 
-    /**
-     * @param  mixed  $attributes
-     * @return Collection|array|null
-     */
     public function all(mixed $attributes = null): Collection|array|null
     {
         return $this->builder()?->get();
     }
 
-    /**
-     * @param  mixed  $attributes
-     * @return Model|null
-     */
     public function make(mixed $attributes = null): ?Model
     {
         return $this->builder()?->firstOrNew($attributes ?? []);
     }
 
-    /**
-     * @param  mixed  $attributes
-     * @return Model|null
-     */
     public function create(mixed $attributes = null): ?Model
     {
         $found_or_new = $this->make($attributes);
@@ -78,11 +55,6 @@ abstract class BaseRepository implements RepositoryInterface
         return $found_or_new;
     }
 
-    /**
-     * @param  int|string|array|null|Model  $id
-     * @param  mixed  $attributes
-     * @return Model|Collection|array|null
-     */
     public function get(int|string|array|Model|null $id = null, mixed $attributes = null): Model|Collection|array|null
     {
         if ($id) {
@@ -92,11 +64,6 @@ abstract class BaseRepository implements RepositoryInterface
         return $this->all();
     }
 
-    /**
-     * @param  int|string|array|null|Model  $id
-     * @param  mixed  $attributes
-     * @return Model|Collection|array|null
-     */
     public function update(int|string|array|Model|null $id = null, mixed $attributes = []): Model|Collection|array|null
     {
         $model = $id instanceof Model ? $id : $this->get($id);
@@ -112,11 +79,6 @@ abstract class BaseRepository implements RepositoryInterface
         return $model;
     }
 
-    /**
-     * @param  int|string|array|null|Model  $id
-     * @param  mixed  $attributes
-     * @return Model|Collection|array|null
-     */
     public function delete(int|string|array|Model|null $id = null, mixed $attributes = null): Model|Collection|array|null
     {
         if ($id instanceof Model) {
@@ -139,11 +101,6 @@ abstract class BaseRepository implements RepositoryInterface
         return null;
     }
 
-    /**
-     * @param  int|string|array|null|Model  $id
-     * @param  mixed  $attributes
-     * @return Model|Collection|array|null
-     */
     public function restore(int|string|array|Model|null $id = null, mixed $attributes = null): Model|Collection|array|null
     {
         if ($id instanceof Model && class_uses_trait($id, SoftDeletes::class)) {

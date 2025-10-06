@@ -22,18 +22,14 @@ trait ModelDisablingTrait
 {
     /**
      * Boot the disabling trait for a model.
-     *
-     * @return void
      */
     public static function bootModelDisablingTrait(): void
     {
-        static::addGlobalScope(new ModelDisablingScope());
+        static::addGlobalScope(new ModelDisablingScope);
     }
 
     /**
      * Initialize the disabling trait for an instance.
-     *
-     * @return void
      */
     public function initializeModelDisablingTrait(): void
     {
@@ -44,8 +40,6 @@ trait ModelDisablingTrait
 
     /**
      * Get the name of the "disabled at" column.
-     *
-     * @return string
      */
     public static function getDisabledAtColumn(): string
     {
@@ -54,8 +48,6 @@ trait ModelDisablingTrait
 
     /**
      * Get the fully qualified "disabled at" column.
-     *
-     * @return string
      */
     public function getQualifiedDisabledAtColumn(): string
     {
@@ -64,8 +56,6 @@ trait ModelDisablingTrait
 
     /**
      * Get the name of the "disabler id" column.
-     *
-     * @return string
      */
     public static function getDisablerIdColumn(): string
     {
@@ -74,8 +64,6 @@ trait ModelDisablingTrait
 
     /**
      * Get the fully qualified "disabler id" column.
-     *
-     * @return string
      */
     public function getQualifiedDisablerIdColumn(): string
     {
@@ -84,8 +72,6 @@ trait ModelDisablingTrait
 
     /**
      * Get the name of the "disable reason" column.
-     *
-     * @return string
      */
     public static function getDisableReasonColumn(): string
     {
@@ -94,8 +80,6 @@ trait ModelDisablingTrait
 
     /**
      * Get the fully qualified "disable reason" column.
-     *
-     * @return string
      */
     public function getQualifiedDisableReasonColumn(): string
     {
@@ -104,9 +88,6 @@ trait ModelDisablingTrait
 
     /***** RELATIONSHIPS *****/
 
-    /**
-     * @return BelongsTo
-     */
     public function disabler(): BelongsTo
     {
         $model = starterKit()->getUserModel();
@@ -116,9 +97,6 @@ trait ModelDisablingTrait
 
     /***** ACCESSORS *****/
 
-    /**
-     * @return bool
-     */
     public function getIsEnabledAttribute(): bool
     {
         $column = $this->getDisabledAtColumn();
@@ -129,10 +107,6 @@ trait ModelDisablingTrait
     /***** OTHER FUNCTIONS *****/
 
     /**
-     * @param  string|null  $reason
-     * @param  User|null  $disabler
-     * @return bool
-     *
      * @throws DisablerRequiredException|DisableReasonRequiredException
      */
     public function disable(?string $reason = null, ?User $disabler = null): bool
@@ -140,13 +114,13 @@ trait ModelDisablingTrait
         $disabler = $disabler ?? auth()->user();
 
         if (is_null($disabler) && config('starter-kit.columns.disables.disabler_required')) {
-            throw new DisablerRequiredException();
+            throw new DisablerRequiredException;
         } else {
             $this->{self::getDisablerIdColumn()} = $disabler?->getKey();
         }
 
         if (is_null($reason) && config('starter-kit.columns.disables.disable_reason_required')) {
-            throw new DisableReasonRequiredException();
+            throw new DisableReasonRequiredException;
         } else {
             $this->{self::getDisableReasonColumn()} = $reason;
         }
@@ -156,9 +130,6 @@ trait ModelDisablingTrait
         return $this->save();
     }
 
-    /**
-     * @return bool
-     */
     public function enable(): bool
     {
         $this->{self::getDisabledAtColumn()} = null;

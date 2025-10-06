@@ -23,10 +23,6 @@ class ModelExpiringScope implements Scope
 
     /**
      * Apply the scope to a given Eloquent query builder.
-     *
-     * @param  Builder  $builder
-     * @param  Model  $model
-     * @return void
      */
     public function apply(Builder $builder, Model $model): void
     {
@@ -35,9 +31,6 @@ class ModelExpiringScope implements Scope
 
     /**
      * Extend the query builder with the needed functions.
-     *
-     * @param  Builder  $builder
-     * @return void
      */
     public function extend(Builder $builder): void
     {
@@ -48,9 +41,6 @@ class ModelExpiringScope implements Scope
 
     /**
      * Get the "expires at" column for the builder.
-     *
-     * @param  Builder  $builder
-     * @return string
      */
     protected function getExpiresAtColumn(Builder $builder): string
     {
@@ -63,9 +53,6 @@ class ModelExpiringScope implements Scope
 
     /**
      * Add the unexpire extension to the builder.
-     *
-     * @param  Builder  $builder
-     * @return void
      */
     protected function addUnexpire(Builder $builder): void
     {
@@ -78,9 +65,6 @@ class ModelExpiringScope implements Scope
 
     /**
      * Add to expire extension to the builder.
-     *
-     * @param  Builder  $builder
-     * @return void
      */
     protected function addExpire(Builder $builder): void
     {
@@ -93,9 +77,6 @@ class ModelExpiringScope implements Scope
 
     /**
      * Add the with-expired extension to the builder.
-     *
-     * @param  Builder  $builder
-     * @return void
      */
     protected function addWithExpired(Builder $builder): void
     {
@@ -110,9 +91,6 @@ class ModelExpiringScope implements Scope
 
     /**
      * Add the without-expired extension to the builder.
-     *
-     * @param  Builder  $builder
-     * @return void
      */
     protected function addWithoutExpired(Builder $builder): void
     {
@@ -129,9 +107,6 @@ class ModelExpiringScope implements Scope
 
     /**
      * Add the only-expired extension to the builder.
-     *
-     * @param  Builder  $builder
-     * @return void
      */
     protected function addOnlyExpired(Builder $builder): void
     {
@@ -144,10 +119,6 @@ class ModelExpiringScope implements Scope
         });
     }
 
-    /**
-     * @param  Carbon|string|null  $date_time
-     * @return string
-     */
     public static function getExpirationDateTime(Carbon|string|null $date_time = null): string
     {
         if ($date_time) {

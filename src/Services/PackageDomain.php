@@ -37,33 +37,14 @@ class PackageDomain
     use UsesProviderRepositoryMapTrait;
     use UsesProviderRoutesTrait;
 
-    /**
-     * @var ServiceProvider|null
-     */
     protected ?ServiceProvider $provider = null;
 
-    /**
-     * @var Collection|array
-     */
     protected Collection|array $excluded_directories = [];
 
-    /**
-     * @var ServiceProviderData|null
-     */
     protected ?ServiceProviderData $provider_data = null;
 
-    /**
-     * @var Collection|null
-     */
     protected ?Collection $existing_paths = null;
 
-    /**
-     * @param  Application  $app
-     * @param  StarterKit  $starter_kit
-     * @param  Repository  $config
-     * @param  Migrator  $migrator
-     * @param  Translator  $translator
-     */
     public function __construct(
         protected Application $app,
         protected StarterKit $starter_kit,
@@ -76,9 +57,6 @@ class PackageDomain
 
     // Setters
 
-    /**
-     * @param  ServiceProvider  $provider
-     */
     public function setProvider(ServiceProvider $provider): void
     {
         $this->provider = $provider;
@@ -112,7 +90,6 @@ class PackageDomain
     }
 
     /**
-     * @param  ServiceProvider  $provider
      * @return $this
      */
     public function provider(ServiceProvider $provider): static
@@ -122,16 +99,12 @@ class PackageDomain
         return $this;
     }
 
-    /**
-     * @param  array|Collection  $excluded_directories
-     */
     public function setExcludedDirectories(array|Collection $excluded_directories): void
     {
         $this->excluded_directories = $excluded_directories;
     }
 
     /**
-     * @param  array|Collection  $excluded_directories
      * @return $this
      */
     public function excludeDirectories(array|Collection $excluded_directories): static
@@ -141,9 +114,6 @@ class PackageDomain
         return $this;
     }
 
-    /**
-     * @return static
-     */
     public function bootLaravelFiles(): static
     {
         if ($this->provider) {
@@ -159,9 +129,6 @@ class PackageDomain
         return $this;
     }
 
-    /**
-     * @return static
-     */
     public function registerLaravelFiles(): static
     {
         if ($this->provider) {
@@ -415,27 +382,17 @@ class PackageDomain
         return $this;
     }
 
-    /**
-     * @param  array|null  $append_to_prefix
-     * @return array
-     */
     public function getRouteApiConfiguration(?array $append_to_prefix = null): array
     {
         return $this->getRouteConfiguration(true, $append_to_prefix);
     }
 
-    /**
-     * @param  array|null  $append_to_prefix
-     * @return array
-     */
     public function getRouteWebConfiguration(?array $append_to_prefix = null): array
     {
         return $this->getRouteConfiguration(false, $append_to_prefix);
     }
 
     /**
-     * @param  bool  $is_api
-     * @param  array|null  $append_to_prefix
      * @return string[]
      */
     public function getRouteConfiguration(bool $is_api, ?array $append_to_prefix = null): array

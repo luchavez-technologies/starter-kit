@@ -25,9 +25,6 @@ use Symfony\Component\Process\Process;
 /***** STARTER-KIT SERVICE *****/
 
 if (! function_exists('starterKit')) {
-    /**
-     * @return StarterKit
-     */
     function starterKit(): StarterKit
     {
         return resolve('starter-kit');
@@ -35,9 +32,6 @@ if (! function_exists('starterKit')) {
 }
 
 if (! function_exists('starter_kit')) {
-    /**
-     * @return StarterKit
-     */
     function starter_kit(): StarterKit
     {
         return starterKit();
@@ -47,12 +41,6 @@ if (! function_exists('starter_kit')) {
 /***** SIMPLE RESPONSE SERVICE *****/
 
 if (! function_exists('simpleResponse')) {
-    /**
-     * @param  string|null  $message
-     * @param  mixed|null  $data
-     * @param  int  $code
-     * @return SimpleResponse
-     */
     function simpleResponse(?string $message = null, mixed $data = null, int $code = 200): SimpleResponse
     {
         return resolve('simple-response', func_get_args());
@@ -60,12 +48,6 @@ if (! function_exists('simpleResponse')) {
 }
 
 if (! function_exists('simpleResponse')) {
-    /**
-     * @param  string|null  $message
-     * @param  mixed|null  $data
-     * @param  int  $code
-     * @return SimpleResponse
-     */
     function simpleResponse(?string $message = null, mixed $data = null, int $code = 200): SimpleResponse
     {
         return simpleResponse($message, $data, $code);
@@ -75,9 +57,6 @@ if (! function_exists('simpleResponse')) {
 /***** PACKAGE DOMAIN SERVICE *****/
 
 if (! function_exists('packageDomain')) {
-    /**
-     * @return PackageDomain
-     */
     function packageDomain(): PackageDomain
     {
         return resolve('package-domain');
@@ -85,9 +64,6 @@ if (! function_exists('packageDomain')) {
 }
 
 if (! function_exists('package_domain')) {
-    /**
-     * @return PackageDomain
-     */
     function package_domain(): PackageDomain
     {
         return packageDomain();
@@ -96,7 +72,7 @@ if (! function_exists('package_domain')) {
 
 if (! function_exists('callAfterResolvingPackageDomain')) {
     /**
-     * @param  Closure|null  $callable $callable
+     * @param  Closure|null  $callable  $callable
      */
     function callAfterResolvingPackageDomain(?Closure $callable): void
     {
@@ -107,11 +83,6 @@ if (! function_exists('callAfterResolvingPackageDomain')) {
 /***** OTHERS *****/
 
 if (! function_exists('callAfterResolvingService')) {
-    /**
-     * @param  Closure|string  $abstract
-     * @param  Closure|null  $callback
-     * @param  array  $parameters
-     */
     function callAfterResolvingService(Closure|string $abstract, ?Closure $callback, array $parameters = []): void
     {
         $app = app();
@@ -125,13 +96,6 @@ if (! function_exists('callAfterResolvingService')) {
 }
 
 if (! function_exists('array_filter_recursive')) {
-    /**
-     * @param  array  $arr
-     * @param  bool  $accept_boolean
-     * @param  bool  $accept_null
-     * @param  bool  $accept_0
-     * @return array
-     */
     function array_filter_recursive(
         array $arr,
         bool $accept_boolean = false,
@@ -158,13 +122,6 @@ if (! function_exists('array_filter_recursive')) {
 }
 
 if (! function_exists('arrayFilterRecursive')) {
-    /**
-     * @param  array  $arr
-     * @param  bool  $accept_boolean
-     * @param  bool  $accept_null
-     * @param  bool  $accept_0
-     * @return array
-     */
     function arrayFilterRecursive(
         array $arr,
         bool $accept_boolean = false,
@@ -176,10 +133,6 @@ if (! function_exists('arrayFilterRecursive')) {
 }
 
 if (! function_exists('is_request_instance')) {
-    /**
-     * @param    $request
-     * @return bool
-     */
     function is_request_instance($request): bool
     {
         return is_subclass_of($request, Request::class);
@@ -187,10 +140,6 @@ if (! function_exists('is_request_instance')) {
 }
 
 if (! function_exists('isRequestInstance')) {
-    /**
-     * @param    $request
-     * @return bool
-     */
     #[Pure] function isRequestInstance($request): bool
     {
         return is_request_instance($request);
@@ -200,11 +149,6 @@ if (! function_exists('isRequestInstance')) {
 if (! function_exists('request_or_array_has')) {
     /**
      * Check if the Request or associative array has a specific key.
-     *
-     * @param  array|Request  $request
-     * @param  string  $key
-     * @param  bool|null  $is_exact
-     * @return bool
      */
     function request_or_array_has(array|Request $request, string $key = '', ?bool $is_exact = true): bool
     {
@@ -231,11 +175,6 @@ if (! function_exists('request_or_array_has')) {
 if (! function_exists('requestOrArrayHas')) {
     /**
      * Check if the Request or associative array has a specific key.
-     *
-     * @param  array|Request  $request
-     * @param  string  $key
-     * @param  bool|null  $is_exact
-     * @return bool
      */
     function requestOrArrayHas(array|Request $request, string $key = '', ?bool $is_exact = true): bool
     {
@@ -246,11 +185,6 @@ if (! function_exists('requestOrArrayHas')) {
 if (! function_exists('request_or_array_get')) {
     /**
      * Get a value from Request or associative array using a string key.
-     *
-     * @param  array|Request  $request
-     * @param  string  $key
-     * @param  mixed|null  $default
-     * @return mixed
      */
     function request_or_array_get(array|Request $request, string $key, mixed $default = null): mixed
     {
@@ -269,11 +203,6 @@ if (! function_exists('request_or_array_get')) {
 if (! function_exists('requestOrArrayGet')) {
     /**
      * Get a value from Request or associative array using a string key.
-     *
-     * @param  array|Request  $request
-     * @param  string  $key
-     * @param  mixed|null  $default
-     * @return mixed
      */
     function requestOrArrayGet(array|Request $request, string $key, mixed $default = null): mixed
     {
@@ -284,10 +213,6 @@ if (! function_exists('requestOrArrayGet')) {
 if (! function_exists('is_request_or_array_filled')) {
     /**
      * Check if a key exists and is not empty on a Request or associative array.
-     *
-     * @param  array|Request  $request
-     * @param  string  $key
-     * @return bool
      */
     function is_request_or_array_filled(array|Request $request, string $key): bool
     {
@@ -306,10 +231,6 @@ if (! function_exists('is_request_or_array_filled')) {
 if (! function_exists('isRequestOrArrayFilled')) {
     /**
      * Check if a key exists and is not empty on a Request or associative array.
-     *
-     * @param  array|Request  $request
-     * @param  string  $key
-     * @return bool
      */
     function isRequestOrArrayFilled(array|Request $request, string $key): bool
     {
@@ -320,9 +241,6 @@ if (! function_exists('isRequestOrArrayFilled')) {
 if (! function_exists('is_eloquent_model')) {
     /**
      * Determine if the class using the trait is a subclass of Eloquent Model.
-     *
-     * @param  mixed  $object_or_class
-     * @return bool
      */
     function is_eloquent_model(mixed $object_or_class): bool
     {
@@ -333,9 +251,6 @@ if (! function_exists('is_eloquent_model')) {
 if (! function_exists('isEloquentModel')) {
     /**
      * Determine if the class using the trait is a subclass of Eloquent Model.
-     *
-     * @param  mixed  $object_or_class
-     * @return bool
      */
     #[Pure] function isEloquentModel(mixed $object_or_class): bool
     {
@@ -344,10 +259,6 @@ if (! function_exists('isEloquentModel')) {
 }
 
 if (! function_exists('get_class_name_from_object')) {
-    /**
-     * @param  mixed  $object_or_class
-     * @return mixed
-     */
     function get_class_name_from_object(mixed $object_or_class): mixed
     {
         return is_object($object_or_class) ? get_class($object_or_class) : $object_or_class;
@@ -355,10 +266,6 @@ if (! function_exists('get_class_name_from_object')) {
 }
 
 if (! function_exists('getClassNameFromObject')) {
-    /**
-     * @param  mixed  $object_or_class
-     * @return mixed
-     */
     #[Pure] function getClassNameFromObject(mixed $object_or_class): mixed
     {
         return get_class_name_from_object($object_or_class);
@@ -372,8 +279,6 @@ if (! function_exists('collection_decode')) {
     /**
      * Decode a string to a Collection instance.
      *
-     * @param  string|null  $collection
-     * @return Collection|string|null
      *
      * @throws JsonException
      */
@@ -395,8 +300,6 @@ if (! function_exists('collectionDecode')) {
     /**
      * Decode a string to a Collection instance.
      *
-     * @param  string|null  $collection
-     * @return Collection|string|null
      *
      * @throws JsonException
      */
@@ -410,7 +313,6 @@ if (! function_exists('collection_encode')) {
     /**
      * Decode a string to a Collection instance.
      *
-     * @param  Collection|null  $collection
      * @return false|Collection|string|null
      *
      * @throws JsonException
@@ -433,7 +335,6 @@ if (! function_exists('collectionEncode')) {
     /**
      * Decode a string to a Collection instance.
      *
-     * @param  Collection|null  $collection
      * @return false|Collection|string|null
      *
      * @throws JsonException
@@ -447,13 +348,6 @@ if (! function_exists('collectionEncode')) {
 // Filesystem
 
 if (! function_exists('collect_files_or_directories')) {
-    /**
-     * @param  string|null  $directory
-     * @param  bool  $with_directories
-     * @param  bool  $with_files
-     * @param  bool  $prepend_directory
-     * @return Collection|null
-     */
     function collect_files_or_directories(
         ?string $directory = null,
         bool $with_directories = true,
@@ -494,13 +388,6 @@ if (! function_exists('collect_files_or_directories')) {
 }
 
 if (! function_exists('collectFilesOrDirectories')) {
-    /**
-     * @param  string|null  $directory
-     * @param  bool  $with_directories
-     * @param  bool  $with_files
-     * @param  bool  $prepend_directory
-     * @return Collection|null
-     */
     function collectFilesOrDirectories(
         ?string $directory = null,
         bool $with_directories = true,
@@ -513,7 +400,6 @@ if (! function_exists('collectFilesOrDirectories')) {
 
 if (! function_exists('get_dir_from_object_class_dir')) {
     /**
-     * @param  object|string  $object_or_class_or_dir
      * @return false|object|string
      */
     function get_dir_from_object_class_dir(object|string $object_or_class_or_dir): object|bool|string
@@ -539,7 +425,6 @@ if (! function_exists('get_dir_from_object_class_dir')) {
 
 if (! function_exists('getDirFromObjectClassDir')) {
     /**
-     * @param  object|string  $object_or_class_or_dir
      * @return false|object|string
      */
     function getDirFromObjectClassDir(object|string $object_or_class_or_dir): object|bool|string
@@ -549,13 +434,6 @@ if (! function_exists('getDirFromObjectClassDir')) {
 }
 
 if (! function_exists('guess_file_or_directory_path')) {
-    /**
-     * @param  object|string  $source_object_or_class_or_dir
-     * @param  Collection|array|string  $target_file_or_folder
-     * @param  bool  $traverse_up
-     * @param  int  $max_levels
-     * @return Collection|array|string|null
-     */
     function guess_file_or_directory_path(
         object|string $source_object_or_class_or_dir,
         Collection|array|string $target_file_or_folder,
@@ -647,11 +525,7 @@ if (! function_exists('guess_file_or_directory_path')) {
 
 if (! function_exists('guessFileOrDirectoryPath')) {
     /**
-     * @param  object|string  $source_object_or_class_or_dir
      * @param  Collection|string[]|string  $target_file_or_folder
-     * @param  bool  $traverse_up
-     * @param  int  $max_levels
-     * @return string|null
      */
     function guessFileOrDirectoryPath(
         object|string $source_object_or_class_or_dir,
@@ -664,11 +538,6 @@ if (! function_exists('guessFileOrDirectoryPath')) {
 }
 
 if (! function_exists('collect_classes_from_path')) {
-    /**
-     * @param  string  $path
-     * @param  string|null  $suffix
-     * @return Collection|null
-     */
     function collect_classes_from_path(string $path, ?string $suffix = null): ?Collection
     {
         if (! file_exists($path)) {
@@ -689,11 +558,6 @@ if (! function_exists('collect_classes_from_path')) {
 }
 
 if (! function_exists('collectClassesFromPath')) {
-    /**
-     * @param  string  $path
-     * @param  string|null  $suffix
-     * @return Collection
-     */
     function collectClassesFromPath(string $path, ?string $suffix = null): Collection
     {
         return collect_classes_from_path($path, $suffix);
@@ -703,10 +567,6 @@ if (! function_exists('collectClassesFromPath')) {
 // Validate Base64 String
 
 if (! function_exists('is_valid_base64')) {
-    /**
-     * @param  string  $string
-     * @return bool
-     */
     function is_valid_base64(string $string): bool
     {
         // Check if there are valid base64 characters
@@ -730,10 +590,6 @@ if (! function_exists('is_valid_base64')) {
 }
 
 if (! function_exists('isValidBase64')) {
-    /**
-     * @param  string  $string
-     * @return bool
-     */
     function isValidBase64(string $string): bool
     {
         return is_valid_base64($string);
@@ -743,10 +599,6 @@ if (! function_exists('isValidBase64')) {
 // Validate URL
 
 if (! function_exists('is_valid_url')) {
-    /**
-     * @param  string  $url
-     * @return bool
-     */
     function is_valid_url(string $url): bool
     {
         $path = parse_url($url, PHP_URL_PATH);
@@ -758,10 +610,6 @@ if (! function_exists('is_valid_url')) {
 }
 
 if (! function_exists('isValidURL')) {
-    /**
-     * @param  string  $url
-     * @return bool
-     */
     function isValidURL(string $url): bool
     {
         return is_valid_url($url);
@@ -771,11 +619,6 @@ if (! function_exists('isValidURL')) {
 // Symfony Process
 
 if (! function_exists('make_process')) {
-    /**
-     * @param  Collection|array  $arguments
-     * @param  string|null  $workingDirectory
-     * @return Process
-     */
     function make_process(Collection|array $arguments, ?string $workingDirectory = null): Process
     {
         if (! $workingDirectory) {
@@ -791,11 +634,6 @@ if (! function_exists('make_process')) {
 }
 
 if (! function_exists('makeProcess')) {
-    /**
-     * @param  Collection|array  $arguments
-     * @param  string|null  $workingDirectory
-     * @return Process
-     */
     function makeProcess(Collection|array $arguments, ?string $workingDirectory = null): Process
     {
         return make_process($arguments, $workingDirectory);
@@ -807,9 +645,6 @@ if (! function_exists('makeProcess')) {
 if (! function_exists('enforce_morph_map')) {
     /**
      * Define the morph map for polymorphic relations and require all morphed models to be explicitly mapped.
-     *
-     * @param  array  $map
-     * @param  bool  $merge
      */
     function enforce_morph_map(array $map, bool $merge = true): void
     {
@@ -820,9 +655,6 @@ if (! function_exists('enforce_morph_map')) {
 if (! function_exists('enforceMorphMap')) {
     /**
      * Define the morph map for polymorphic relations and require all morphed models to be explicitly mapped.
-     *
-     * @param  array  $map
-     * @param  bool  $merge
      */
     function enforceMorphMap(array $map, bool $merge = true): void
     {
@@ -833,11 +665,6 @@ if (! function_exists('enforceMorphMap')) {
 // Class Uses Trait
 
 if (! function_exists('class_uses_trait')) {
-    /**
-     * @param  object|string  $class
-     * @param  string  $trait
-     * @return bool
-     */
     function class_uses_trait(object|string $class, string $trait): bool
     {
         return collect(class_uses_recursive($class))->contains($trait);
@@ -845,11 +672,6 @@ if (! function_exists('class_uses_trait')) {
 }
 
 if (! function_exists('classUsesTrait')) {
-    /**
-     * @param  object|string  $class
-     * @param  string  $trait
-     * @return bool
-     */
     function classUsesTrait(object|string $class, string $trait): bool
     {
         return class_uses_trait($class, $trait);
@@ -859,11 +681,6 @@ if (! function_exists('classUsesTrait')) {
 /***** COMPOSER JSON RELATED *****/
 
 if (! function_exists('get_contents_from_composer_json')) {
-    /**
-     * @param  string|null  $path
-     * @param  string|null  $dot_notation_key
-     * @return Collection|null
-     */
     function get_contents_from_composer_json(?string $path = null, ?string $dot_notation_key = null): ?Collection
     {
         $path = qualify_composer_json($path);
@@ -888,11 +705,6 @@ if (! function_exists('get_contents_from_composer_json')) {
 }
 
 if (! function_exists('getContentsFromComposerJson')) {
-    /**
-     * @param  string|null  $path
-     * @param  string|null  $dot_notation_key
-     * @return Collection|null
-     */
     function getContentsFromComposerJson(?string $path = null, ?string $dot_notation_key = null): ?Collection
     {
         return get_contents_from_composer_json($path, $dot_notation_key);
@@ -900,11 +712,6 @@ if (! function_exists('getContentsFromComposerJson')) {
 }
 
 if (! function_exists('add_provider_to_composer_json')) {
-    /**
-     * @param  string  $provider
-     * @param  string|null  $path
-     * @return bool
-     */
     function add_provider_to_composer_json(string $provider, ?string $path = null): bool
     {
         // Check if app config exists or if provider is already load or if provider is already appended
@@ -917,11 +724,6 @@ if (! function_exists('add_provider_to_composer_json')) {
 }
 
 if (! function_exists('remove_provider_from_composer_json')) {
-    /**
-     * @param  string  $provider
-     * @param  string|null  $path
-     * @return bool
-     */
     function remove_provider_from_composer_json(string $provider, ?string $path = null): bool
     {
         // Check if app config exists or if provider is already load or if provider is already appended
@@ -934,10 +736,6 @@ if (! function_exists('remove_provider_from_composer_json')) {
 }
 
 if (! function_exists('qualify_composer_json')) {
-    /**
-     * @param  string|null  $path
-     * @return string
-     */
     function qualify_composer_json(?string $path = null): string
     {
         if ($path && Str::endsWith($path, 'composer.json') && file_exists($path)) {
@@ -960,10 +758,6 @@ if (! function_exists('qualify_composer_json')) {
 }
 
 if (! function_exists('qualifyComposerJson')) {
-    /**
-     * @param  string|null  $path
-     * @return string
-     */
     function qualifyComposerJson(?string $path = null): string
     {
         return qualify_composer_json($path);
@@ -973,13 +767,6 @@ if (! function_exists('qualifyComposerJson')) {
 /***** ENV FILE RELATED *****/
 
 if (! function_exists('add_contents_to_env')) {
-    /**
-     * @param  Collection|array  $contents
-     * @param  string|null  $title
-     * @param  bool  $override
-     * @param  bool  $force
-     * @return bool
-     */
     function add_contents_to_env(
         Collection|array $contents,
         ?string $title = null,
@@ -1046,13 +833,6 @@ if (! function_exists('add_contents_to_env')) {
 }
 
 if (! function_exists('addContentsToEnv')) {
-    /**
-     * @param  Collection|array  $contents
-     * @param  string|null  $title
-     * @param  bool  $override
-     * @param  bool  $force
-     * @return bool
-     */
     function addContentsToEnv(
         Collection|array $contents,
         ?string $title = null,
@@ -1064,11 +844,6 @@ if (! function_exists('addContentsToEnv')) {
 }
 
 if (! function_exists('get_combined_key_value')) {
-    /**
-     * @param  string  $key
-     * @param  string|null  $value
-     * @return string
-     */
     function get_combined_key_value(string $key, ?string $value = ''): string
     {
         return Str::of($value)
@@ -1082,11 +857,6 @@ if (! function_exists('get_combined_key_value')) {
 }
 
 if (! function_exists('getCombinedKeyValue')) {
-    /**
-     * @param  string  $key
-     * @param  string  $value
-     * @return string
-     */
     function getCombinedKeyValue(string $key, string $value): string
     {
         return get_combined_key_value($key, $value);
@@ -1096,12 +866,6 @@ if (! function_exists('getCombinedKeyValue')) {
 /***** PARSE DOMAIN *****/
 
 if (! function_exists('domain_decode')) {
-    /**
-     * @param  string  $domain
-     * @param  bool  $as_namespace
-     * @param  string  $separator
-     * @return string
-     */
     function domain_decode(string $domain, bool $as_namespace = false, string $separator = '.'): string
     {
         $replace = ! $as_namespace ? '/domains/' : '\\Domains\\';
@@ -1111,11 +875,6 @@ if (! function_exists('domain_decode')) {
 }
 
 if (! function_exists('domain_encode')) {
-    /**
-     * @param  string  $path_or_namespace
-     * @param  string  $separator
-     * @return string|null
-     */
     function domain_encode(string $path_or_namespace, string $separator = '.'): ?string
     {
         if (preg_match('~((\\\\|/)*domains(\\\\|/)[a-z\d]+)+~i', $path_or_namespace, $matches)) {
@@ -1131,10 +890,6 @@ if (! function_exists('domain_encode')) {
 /***** APP CONFIG FILE RELATED *****/
 
 if (! function_exists('add_provider_to_app_config')) {
-    /**
-     * @param  string  $provider
-     * @return bool
-     */
     function add_provider_to_app_config(string $provider): bool
     {
         // Check if app config exists or if provider is already load or if provider is already appended
@@ -1203,10 +958,6 @@ if (! function_exists('add_provider_to_app_config')) {
 }
 
 if (! function_exists('remove_provider_from_app_config')) {
-    /**
-     * @param  string  $provider
-     * @return bool
-     */
     function remove_provider_from_app_config(string $provider): bool
     {
         // Check if app config exists or if provider is already load or if provider is already appended

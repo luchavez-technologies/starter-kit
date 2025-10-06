@@ -16,35 +16,20 @@ use Throwable;
  */
 trait HasTaggableCacheTrait
 {
-    /**
-     * @return string
-     */
     abstract public function getMainTag(): string;
 
-    /**
-     * @var CacheManager|null
-     */
     protected ?CacheManager $cache_manager = null;
 
-    /**
-     * @return CacheManager
-     */
     public function getCacheManager(): CacheManager
     {
         return $this->cache_manager ?? cache();
     }
 
-    /**
-     * @param  CacheManager|null  $cache_manager
-     */
     public function setCacheManager(?CacheManager $cache_manager): void
     {
         $this->cache_manager = $cache_manager;
     }
 
-    /**
-     * @return bool
-     */
     public function isCacheTaggable(): bool
     {
         try {
@@ -54,9 +39,6 @@ trait HasTaggableCacheTrait
         }
     }
 
-    /**
-     * @return bool
-     */
     public function clearCache(): bool
     {
         $manager = $this->getCacheManager();
@@ -68,10 +50,6 @@ trait HasTaggableCacheTrait
         return $manager->flush();
     }
 
-    /**
-     * @param ...$tags
-     * @return array
-     */
     protected function getTags(...$tags): array
     {
         return collect($this->getMainTag())->merge($tags)->unique()->filter()->toArray();
@@ -79,11 +57,6 @@ trait HasTaggableCacheTrait
 
     /**
      * @param  string[]  $tags
-     * @param  string  $key
-     * @param  Closure  $closure
-     * @param  bool  $rehydrate
-     * @param  Closure|DateTimeInterface|DateInterval|int|null  $ttl
-     * @return mixed
      */
     protected function getCache(array $tags, string $key, Closure $closure, bool $rehydrate = false, Closure|DateTimeInterface|DateInterval|int|null $ttl = null): mixed
     {
@@ -117,9 +90,7 @@ trait HasTaggableCacheTrait
     }
 
     /**
-     * @param  string  $key
      * @param  string[]  $tags
-     * @return bool
      */
     public function forgetCache(array $tags, string $key): bool
     {
@@ -132,12 +103,6 @@ trait HasTaggableCacheTrait
         return $manager->forget($key);
     }
 
-    /**
-     * @param  CacheManager  $manager
-     * @param  array  $tags
-     * @param  string  $key
-     * @return void
-     */
     protected function prepareCacheManagerAndKey(CacheManager &$manager, string &$key, array $tags = []): void
     {
         if ($this->isCacheTaggable()) {
@@ -147,14 +112,9 @@ trait HasTaggableCacheTrait
         }
     }
 
-    /**
-     * @param  string  $class
-     * @param  string  $base_class
-     * @return void
-     */
     public function validateClass(string &$class, string $base_class): void
     {
-        $object = new $class();
+        $object = new $class;
 
         $class = get_class($object);
 

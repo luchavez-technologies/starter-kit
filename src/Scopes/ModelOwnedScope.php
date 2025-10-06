@@ -24,10 +24,6 @@ class ModelOwnedScope implements Scope
 
     /**
      * Apply the scope to a given Eloquent query builder.
-     *
-     * @param  Builder  $builder
-     * @param  Model  $model
-     * @return void
      */
     public function apply(Builder $builder, Model $model): void
     {
@@ -36,9 +32,6 @@ class ModelOwnedScope implements Scope
 
     /**
      * Extend the query builder with the needed functions.
-     *
-     * @param  Builder  $builder
-     * @return void
      */
     public function extend(Builder $builder): void
     {
@@ -49,9 +42,6 @@ class ModelOwnedScope implements Scope
 
     /**
      * Get the "owner id" column for the builder.
-     *
-     * @param  Builder  $builder
-     * @return string
      */
     protected function getOwnerIdColumn(Builder $builder): string
     {
@@ -64,9 +54,6 @@ class ModelOwnedScope implements Scope
 
     /**
      * Add the owned extension to the builder.
-     *
-     * @param  Builder  $builder
-     * @return void
      */
     protected function addOwned(Builder $builder): void
     {
