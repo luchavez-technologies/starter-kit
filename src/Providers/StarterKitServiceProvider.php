@@ -2,16 +2,12 @@
 
 namespace Luchavez\StarterKit\Providers;
 
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Contracts\Debug\ExceptionHandler;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Application;
 use Illuminate\Routing\Router;
 use Luchavez\StarterKit\Abstracts\BaseStarterKitServiceProvider as ServiceProvider;
 use Luchavez\StarterKit\Enums\OnDeleteAction;
 use Luchavez\StarterKit\Enums\OnUpdateAction;
-use Luchavez\StarterKit\Exceptions\Handler;
 use Luchavez\StarterKit\Http\Middleware\ChangeAppLocaleMiddleware;
 use Luchavez\StarterKit\Interfaces\ProviderHttpKernelInterface;
 use Luchavez\StarterKit\Services\PackageDomain;
@@ -34,8 +30,6 @@ class StarterKitServiceProvider extends ServiceProvider implements ProviderHttpK
      * Publishable Environment Variables
      *
      * @example [ 'SK_OVERRIDE_EXCEPTION_HANDLER' => true ]
-     *
-     * @var array
      */
     protected array $env_vars = [
         'SK_OVERRIDE_EXCEPTION_HANDLER' => false,
@@ -49,32 +43,10 @@ class StarterKitServiceProvider extends ServiceProvider implements ProviderHttpK
 
     /**
      * Perform post-registration booting of services.
-     *
-     * @return void
      */
     public function boot(): void
     {
         parent::boot();
-
-        // Register Custom Exception Handler
-        if (starterKit()->shouldOverrideExceptionHandler()) {
-            $this->app->singleton(ExceptionHandler::class, Handler::class);
-
-            starterKit()->addExceptionRender(ModelNotFoundException::class, function () {
-                return simpleResponse()
-                    ->message('The resource you are looking for does not exist.')
-                    ->slug('no_query_result')
-                    ->failed(404)
-                    ->generate();
-            });
-
-            starterKit()->addExceptionRender(AuthorizationException::class, function ($request, AuthorizationException $exception) {
-                return simpleResponse()
-                    ->message($exception->getMessage())
-                    ->failed(403)
-                    ->generate();
-            });
-        }
 
         // Register custom migration functions
         Blueprint::macro('expires', function (
@@ -140,14 +112,12 @@ class StarterKitServiceProvider extends ServiceProvider implements ProviderHttpK
 
     /**
      * Register any package services.
-     *
-     * @return void
      */
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../../config/starter-kit.php', 'starter-kit');
 
-        $this->app->singleton('starter-kit', fn () => new StarterKit());
+        $this->app->singleton('starter-kit', fn () => new StarterKit);
 
         $this->app->singleton('package-domain', function (Application $app) {
             return new PackageDomain(
@@ -160,14 +130,10 @@ class StarterKitServiceProvider extends ServiceProvider implements ProviderHttpK
         });
 
         $this->app->bind('simple-response', fn ($app, $params) => new SimpleResponse(...$params));
-
-        parent::register();
     }
 
     /**
      * Get the services provided by the provider.
-     *
-     * @return array
      */
     public function provides(): array
     {
@@ -176,8 +142,6 @@ class StarterKitServiceProvider extends ServiceProvider implements ProviderHttpK
 
     /**
      * Console-specific booting.
-     *
-     * @return void
      */
     protected function bootForConsole(): void
     {
@@ -193,25 +157,16 @@ class StarterKitServiceProvider extends ServiceProvider implements ProviderHttpK
         $this->commands($this->commands);
     }
 
-    /**
-     * @return string|null
-     */
     public function getRoutePrefix(): ?string
     {
         return 'starter-kit';
     }
 
-    /**
-     * @return bool
-     */
     public function areHelpersEnabled(): bool
     {
         return false;
     }
 
-    /**
-     * @return bool
-     */
     public function areConfigsEnabled(): bool
     {
         return false;
@@ -219,10 +174,6 @@ class StarterKitServiceProvider extends ServiceProvider implements ProviderHttpK
 
     /***** LANG RELATED *****/
 
-    /**
-     * @param  Router  $router
-     * @return void
-     */
     public function registerToHttpKernel(Router $router): void
     {
         // Register and add 'change_locale' middleware globally

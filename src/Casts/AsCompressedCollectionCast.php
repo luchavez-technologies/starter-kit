@@ -17,13 +17,10 @@ class AsCompressedCollectionCast extends AsCollection
 {
     /**
      * Get the caster class to use when casting from / to this cast target.
-     *
-     * @param  array  $arguments
-     * @return CastsAttributes|string
      */
     public static function castUsing(array $arguments): CastsAttributes|string
     {
-        return new class() implements CastsAttributes
+        return new class implements CastsAttributes
         {
             public function get($model, $key, $value, $attributes): ?Collection
             {

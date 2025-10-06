@@ -19,18 +19,14 @@ trait ModelExpiringTrait
 {
     /**
      * Boot the expiring trait for a model.
-     *
-     * @return void
      */
     public static function bootModelExpiringTrait(): void
     {
-        static::addGlobalScope(new ModelExpiringScope());
+        static::addGlobalScope(new ModelExpiringScope);
     }
 
     /**
      * Initialize the expiring trait for an instance.
-     *
-     * @return void
      */
     public function initializeModelExpiringTrait(): void
     {
@@ -41,8 +37,6 @@ trait ModelExpiringTrait
 
     /**
      * Get the name of the "expires at" column.
-     *
-     * @return string
      */
     public static function getExpiresAtColumn(): string
     {
@@ -51,17 +45,12 @@ trait ModelExpiringTrait
 
     /**
      * Get the fully qualified "expires at" column.
-     *
-     * @return string
      */
     public function getQualifiedExpiresAtColumn(): string
     {
         return $this->qualifyColumn($this->getExpiresAtColumn());
     }
 
-    /**
-     * @return bool
-     */
     public function getIsExpiredAttribute(): bool
     {
         $column = $this->getExpiresAtColumn();
@@ -70,10 +59,6 @@ trait ModelExpiringTrait
         return $value && $value->isPast();
     }
 
-    /**
-     * @param  Carbon|string|null  $date_time
-     * @return bool
-     */
     public function expire(Carbon|string|null $date_time = null): bool
     {
         $column = self::getExpiresAtColumn();
@@ -82,9 +67,6 @@ trait ModelExpiringTrait
         return $this->save();
     }
 
-    /**
-     * @return bool
-     */
     public function unexpire(): bool
     {
         $column = self::getExpiresAtColumn();
@@ -93,18 +75,11 @@ trait ModelExpiringTrait
         return $this->save();
     }
 
-    /**
-     * @param  Carbon|string|null  $date_time
-     * @return bool
-     */
     public function expireQuietly(Carbon|string|null $date_time = null): bool
     {
         return static::withoutEvents(fn () => $this->expire($date_time));
     }
 
-    /**
-     * @return bool
-     */
     public function unexpireQuietly(): bool
     {
         return static::withoutEvents(fn () => $this->unexpire());

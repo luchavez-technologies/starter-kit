@@ -11,9 +11,6 @@ use Luchavez\StarterKit\Interfaces\ProviderHttpKernelInterface;
  */
 trait UsesProviderHttpKernelTrait
 {
-    /**
-     * @return void
-     */
     public function bootHttpKernel(): void
     {
         if ($this instanceof ProviderHttpKernelInterface) {

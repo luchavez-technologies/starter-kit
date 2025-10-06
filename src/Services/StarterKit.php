@@ -23,19 +23,10 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 class StarterKit
 {
-    /**
-     * @var array
-     */
     protected array $paths = [];
 
-    /**
-     * @var array
-     */
     protected array $providers = [];
 
-    /**
-     * @var array
-     */
     protected array $exception_renders = [];
 
     /***** FOLDER NAMES OF LARAVEL FILES *****/
@@ -64,25 +55,17 @@ class StarterKit
 
     public const DOMAINS_DIR = 'domains';
 
-    /**
-     * @return string
-     */
     public function getMainTag(): string
     {
         return 'starter-kit';
     }
 
-    /**
-     * @return Collection
-     */
     public function getProviders(): Collection
     {
         return collect($this->providers);
     }
 
     /**
-     * @param  string|null  $package
-     * @param  string|null  $domain
      * @return Collection<ServiceProvider>
      */
     public function getProvidersFromList(?string $package = null, ?string $domain = null): Collection
@@ -93,10 +76,6 @@ class StarterKit
             ->map(fn (array $data) => ServiceProviderData::from($data)->getServiceProvider());
     }
 
-    /**
-     * @param  ServiceProvider  $provider
-     * @return ServiceProviderData
-     */
     public function addToProviders(ServiceProvider $provider): ServiceProviderData
     {
         $providers = $this->getProviders();
@@ -110,11 +89,6 @@ class StarterKit
         return $data;
     }
 
-    /**
-     * @param  string|null  $package
-     * @param  string|null  $domain
-     * @return Collection
-     */
     public function getPaths(?string $package = null, ?string $domain = null): Collection
     {
         $paths = collect($this->paths);
@@ -131,10 +105,6 @@ class StarterKit
         return collect($paths);
     }
 
-    /**
-     * @param  ServiceProviderData  $data
-     * @return bool
-     */
     public function addToPaths(ServiceProviderData $data): bool
     {
         $paths = $this->getPaths()->toArray();
@@ -166,9 +136,6 @@ class StarterKit
         return true;
     }
 
-    /**
-     * @return Collection
-     */
     public function getTargetDirectories(): Collection
     {
         return collect([
@@ -186,10 +153,6 @@ class StarterKit
         ]);
     }
 
-    /**
-     * @param  string  $source_dir
-     * @return array
-     */
     protected function getFilesFromPaths(string $source_dir): array
     {
         return guess_file_or_directory_path($source_dir, $this->getTargetDirectories())
@@ -234,12 +197,6 @@ class StarterKit
             ->toArray();
     }
 
-    /**
-     * @param  string|null  $package
-     * @param  string|null  $domain
-     * @param  string|null  $dot_notation
-     * @return Collection|null
-     */
     public function getFromPaths(?string $package = null, ?string $domain = null, ?string $dot_notation = null): ?Collection
     {
         if ($value = Arr::get($this->getPaths($package, $domain), $dot_notation)) {
@@ -249,12 +206,6 @@ class StarterKit
         return null;
     }
 
-    /**
-     * @param  string|null  $package
-     * @param  string|null  $domain
-     * @param  array  $only
-     * @return Collection|null
-     */
     public function getPathsOnly(?string $package = null, ?string $domain = null, array $only = []): ?Collection
     {
         $paths = $this->getFromPaths($package, $domain, 'directories')?->map(fn ($item) => $item['path']);
@@ -262,96 +213,51 @@ class StarterKit
         return $paths?->only($only);
     }
 
-    /**
-     * @param  string|null  $package
-     * @return Collection|null
-     */
     public function getDomains(?string $package = null): ?Collection
     {
         return $this->getFromPaths($package, null, self::DOMAINS_DIR)?->map(fn ($value) => $value['path']);
     }
 
-    /**
-     * @return Collection
-     */
     public function getRoot(): Collection
     {
         return $this->getFromPaths()->forget('packages');
     }
 
-    /**
-     * @return Collection|null
-     */
     public function getPackages(): ?Collection
     {
         return $this->getFromPaths(dot_notation: 'packages');
     }
 
-    /**
-     * @param  string|null  $package
-     * @param  string|null  $domain
-     * @return Collection|null
-     */
     public function getConfigs(?string $package = null, ?string $domain = null): ?Collection
     {
         return $this->getFromPaths($package, $domain, 'directories.'.self::CONFIG_DIR.'.files');
     }
 
-    /**
-     * @param  string|null  $package
-     * @param  string|null  $domain
-     * @return Collection|null
-     */
     public function getMigrationsPath(?string $package = null, ?string $domain = null): ?Collection
     {
         return $this->getFromPaths($package, $domain, 'directories.'.self::MIGRATIONS_DIR.'.path');
     }
 
-    /**
-     * @param  string|null  $package
-     * @param  string|null  $domain
-     * @return Collection|null
-     */
     public function getHelpers(?string $package = null, ?string $domain = null): ?Collection
     {
         return $this->getFromPaths($package, $domain, 'directories.'.self::HELPERS_DIR.'.files');
     }
 
-    /**
-     * @param  string|null  $package
-     * @param  string|null  $domain
-     * @return Collection|null
-     */
     public function getRoutes(?string $package = null, ?string $domain = null): ?Collection
     {
         return $this->getFromPaths($package, $domain, 'directories.'.self::ROUTES_DIR.'.files');
     }
 
-    /**
-     * @param  string|null  $package
-     * @param  string|null  $domain
-     * @return string|null
-     */
     public function getTranslations(?string $package = null, ?string $domain = null): ?string
     {
         return $this->getFromPaths($package, $domain, 'directories.'.self::LANG_DIR)->get('path');
     }
 
-    /**
-     * @param  string|null  $package
-     * @param  string|null  $domain
-     * @return Collection|null
-     */
     public function getModels(?string $package = null, ?string $domain = null): ?Collection
     {
         return $this->getFromPaths($package, $domain, 'directories.'.self::MODELS_DIR.'.files');
     }
 
-    /**
-     * @param  string|null  $package
-     * @param  string|null  $domain
-     * @return Collection|null
-     */
     public function getPossibleModels(?string $package = null, ?string $domain = null): ?Collection
     {
         $possibleModels = collect();
@@ -377,13 +283,6 @@ class StarterKit
         );
     }
 
-    /**
-     * @param  string  $directory
-     * @param  string|null  $package
-     * @param  string|null  $domain
-     * @param  array  $map
-     * @return Collection|null
-     */
     public function getModelRelatedFiles(string $directory, ?string $package = null, ?string $domain = null, array $map = []): ?Collection
     {
         if ($files = $this->getFromPaths($package, $domain, 'directories.'.$directory.'.files')) {
@@ -404,34 +303,16 @@ class StarterKit
         return null;
     }
 
-    /**
-     * @param  string|null  $package
-     * @param  string|null  $domain
-     * @param  array  $policy_map
-     * @return Collection|null
-     */
     public function getPolicies(?string $package = null, ?string $domain = null, array $policy_map = []): ?Collection
     {
         return $this->getModelRelatedFiles(self::POLICIES_DIR, $package, $domain, $policy_map);
     }
 
-    /**
-     * @param  string|null  $package
-     * @param  string|null  $domain
-     * @param  array  $observer_map
-     * @return Collection|null
-     */
     public function getObservers(?string $package = null, ?string $domain = null, array $observer_map = []): ?Collection
     {
         return $this->getModelRelatedFiles(self::OBSERVERS_DIR, $package, $domain, $observer_map);
     }
 
-    /**
-     * @param  string|null  $package
-     * @param  string|null  $domain
-     * @param  array  $repository_map
-     * @return Collection|null
-     */
     public function getRepositories(?string $package = null, ?string $domain = null, array $repository_map = []): ?Collection
     {
         return $this->getModelRelatedFiles(self::REPOSITORIES_DIR, $package, $domain, $repository_map);
@@ -439,10 +320,6 @@ class StarterKit
 
     /***** EXCEPTION RELATED *****/
 
-    /**
-     * @param  string|object|null  $exception_class
-     * @return Collection|Closure|callable|null
-     */
     public function getExceptionRenders(string|object|null $exception_class = null): Collection|Closure|callable|null
     {
         $result = collect($this->exception_renders);
@@ -454,12 +331,6 @@ class StarterKit
         return $result;
     }
 
-    /**
-     * @param  string  $exception_class
-     * @param  Closure|callable  $closure
-     * @param  bool  $override
-     * @return bool
-     */
     public function addExceptionRender(string $exception_class, Closure|callable $closure, bool $override = false): bool
     {
         // Check whether already exists
@@ -474,9 +345,6 @@ class StarterKit
 
     /***** USER MODEL *****/
 
-    /**
-     * @return string|null
-     */
     public function getUserModel(): ?string
     {
         if (class_exists($model = config('starter-kit.user_model')) && is_eloquent_model($model)) {
@@ -486,9 +354,6 @@ class StarterKit
         return null;
     }
 
-    /**
-     * @return Builder|null
-     */
     public function getUserQueryBuilder(): ?Builder
     {
         if ($model = $this->getUserModel()) {
@@ -500,18 +365,11 @@ class StarterKit
 
     /***** POLYMORPHIC MAP *****/
 
-    /**
-     * @return Collection
-     */
     public function getMorphMap(): Collection
     {
         return collect(Relation::morphMap());
     }
 
-    /**
-     * @param  string  $model_name
-     * @return string|null
-     */
     public function getMorphMapKey(string $model_name): ?string
     {
         if (is_eloquent_model($model_name)) {
@@ -523,11 +381,6 @@ class StarterKit
 
     /***** ROUTE MIDDLEWARES *****/
 
-    /**
-     * @param  bool  $is_api
-     * @param  string  $separator
-     * @return array
-     */
     public function getRouteMiddleware(bool $is_api, string $separator = ';'): array
     {
         $middleware = $is_api ? config('starter-kit.api_middleware') : config('starter-kit.web_middleware');
@@ -541,17 +394,6 @@ class StarterKit
 
     /***** OTHER METHODS *****/
 
-    /**
-     * @return bool
-     */
-    public function shouldOverrideExceptionHandler(): bool
-    {
-        return config('starter-kit.override_exception_handler');
-    }
-
-    /**
-     * @return bool
-     */
     public function shouldEnforceMorphMap(): bool
     {
         return config('starter-kit.enforce_morph_map');
@@ -559,17 +401,11 @@ class StarterKit
 
     /***** LOCALE RELATED *****/
 
-    /**
-     * @return string
-     */
     public function getChangeLocaleKey(): string
     {
         return config('starter-kit.change_locale.key');
     }
 
-    /**
-     * @return bool
-     */
     public function isChangeLocaleEnabled(): bool
     {
         return (bool) config('starter-kit.change_locale.enabled');

@@ -18,43 +18,23 @@ abstract class BaseJsonSerializable implements JsonSerializable
 {
     use UsesDataParsingTrait;
 
-    /**
-     * @var mixed
-     */
     protected mixed $original_data;
 
-    /**
-     * @param  mixed  $data
-     * @param  string|null  $key
-     */
     public function __construct(mixed $data = [], ?string $key = null)
     {
         $this->setOriginalData($data, $key);
     }
 
-    /**
-     * @return array
-     */
     public function getFieldAliases(): array
     {
         return [];
     }
 
-    /**
-     * @param  mixed  $data
-     * @param  string|null  $key
-     * @return static
-     */
     public static function from(mixed $data = [], ?string $key = null): static
     {
         return new static($data, $key);
     }
 
-    /**
-     * @param  mixed  $data
-     * @param  string|null  $key
-     * @return void
-     */
     public function mergeDataToFields(mixed $data = [], ?string $key = null): void
     {
         $data = $this->parse($data, $key);
@@ -65,7 +45,6 @@ abstract class BaseJsonSerializable implements JsonSerializable
     }
 
     /**
-     * @param  array  $array
      * @return $this
      */
     protected function setFields(array $array): static
@@ -87,10 +66,6 @@ abstract class BaseJsonSerializable implements JsonSerializable
         return $this;
     }
 
-    /**
-     * @param  mixed  $original_data
-     * @param  string|null  $key
-     */
     public function setOriginalData(mixed $original_data, ?string $key = null): void
     {
         $this->original_data = $original_data;
@@ -98,9 +73,6 @@ abstract class BaseJsonSerializable implements JsonSerializable
         $this->mergeDataToFields($original_data, $key);
     }
 
-    /**
-     * @return mixed
-     */
     public function getOriginalData(): mixed
     {
         return $this->original_data;
@@ -114,7 +86,7 @@ abstract class BaseJsonSerializable implements JsonSerializable
      * @link   https://php.net/manual/en/jsonserializable.jsonserialize.php
      *
      * @return static data which can be serialized by <b>json_encode</b>,
-     * which is a value of any type other than a resource.
+     *                which is a value of any type other than a resource.
      *
      * @since  5.4
      */
@@ -124,7 +96,6 @@ abstract class BaseJsonSerializable implements JsonSerializable
     }
 
     /**
-     * @param  BaseJsonSerializable  $object
      * @return $this
      */
     public function performBeforeSerialize(self $object): static
@@ -134,9 +105,6 @@ abstract class BaseJsonSerializable implements JsonSerializable
         return $object;
     }
 
-    /**
-     * @return array
-     */
     public function toArray(): array
     {
         return $this->collect()->toArray();
@@ -145,7 +113,6 @@ abstract class BaseJsonSerializable implements JsonSerializable
     /**
      * The __toString method allows a class to decide how it will react when it is converted to a string.
      *
-     * @return string
      *
      * @link   https://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.tostring
      */
@@ -156,17 +123,11 @@ abstract class BaseJsonSerializable implements JsonSerializable
 
     /***** MORE FUNCTIONS *****/
 
-    /**
-     * @return Collection
-     */
     public function getFieldKeys(): Collection
     {
         return collect(get_class_vars(static::class))->except('original_data')->keys();
     }
 
-    /**
-     * @return Collection
-     */
     public function collect(): Collection
     {
         return collect(get_object_vars($this))->except('original_data');
@@ -192,7 +153,6 @@ abstract class BaseJsonSerializable implements JsonSerializable
 
     /**
      * @param  Collection|string[]|string  $fields
-     * @return static
      */
     public function only(Collection|array|string $fields): static
     {
@@ -207,7 +167,6 @@ abstract class BaseJsonSerializable implements JsonSerializable
 
     /**
      * @param  Collection|string[]|string  $fields
-     * @return static
      */
     public function except(Collection|array|string $fields): static
     {
@@ -236,19 +195,12 @@ abstract class BaseJsonSerializable implements JsonSerializable
         return self::from($this->getOriginalData());
     }
 
-    /**
-     * @return void
-     */
     #[NoReturn]
     public function dd(): void
     {
         dd($this, $this->getFieldKeys(), $this->collect());
     }
 
-    /**
-     * @param  string  $datetime
-     * @return Carbon
-     */
     public function parseStringToCarbon(string $datetime): Carbon
     {
         return Carbon::parse($datetime);

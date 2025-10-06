@@ -24,14 +24,9 @@ trait UsesProviderStarterKitTrait
 
     /**
      * Artisan Commands
-     *
-     * @var array
      */
     protected array $commands = [];
 
-    /**
-     * @return Collection
-     */
     public function getExcludedTargetDirectories(): Collection
     {
         return collect()
@@ -49,16 +44,11 @@ trait UsesProviderStarterKitTrait
 
     /**
      * Console-specific booting.
-     *
-     * @return void
      */
     abstract protected function bootForConsole(): void;
 
     /***** HELPER FILES RELATED *****/
 
-    /**
-     * @return bool
-     */
     public function areHelpersEnabled(): bool
     {
         return true;
@@ -66,9 +56,6 @@ trait UsesProviderStarterKitTrait
 
     /***** TRANSLATIONS RELATED *****/
 
-    /**
-     * @return bool
-     */
     public function areTranslationsEnabled(): bool
     {
         return true;
@@ -76,9 +63,6 @@ trait UsesProviderStarterKitTrait
 
     /***** CONFIGS RELATED *****/
 
-    /**
-     * @return bool
-     */
     public function areConfigsEnabled(): bool
     {
         return true;
@@ -86,9 +70,6 @@ trait UsesProviderStarterKitTrait
 
     /***** MIGRATIONS RELATED *****/
 
-    /**
-     * @return bool
-     */
     public function areMigrationsEnabled(): bool
     {
         return true;

@@ -18,10 +18,7 @@ class AsCompressedArrayCast implements CastsAttributes
      * Cast the given value.
      *
      * @param  Model  $model
-     * @param  string  $key
      * @param  mixed  $value
-     * @param  array  $attributes
-     * @return array|null
      */
     public function get($model, string $key, $value, array $attributes): ?array
     {
@@ -32,10 +29,7 @@ class AsCompressedArrayCast implements CastsAttributes
      * Prepare the given value for storage.
      *
      * @param  Model  $model
-     * @param  string  $key
      * @param  mixed  $value
-     * @param  array  $attributes
-     * @return string|bool|null
      */
     public function set($model, string $key, $value, array $attributes): string|bool|null
     {

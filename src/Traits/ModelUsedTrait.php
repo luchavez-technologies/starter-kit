@@ -13,18 +13,14 @@ trait ModelUsedTrait
 {
     /**
      * Boot the model used trait for a model.
-     *
-     * @return void
      */
     public static function bootModelUsedTrait(): void
     {
-        static::addGlobalScope(new ModelUsedScope());
+        static::addGlobalScope(new ModelUsedScope);
     }
 
     /**
      * Initialize the model used trait for an instance.
-     *
-     * @return void
      */
     public function initializeModelUsedTrait(): void
     {
@@ -35,8 +31,6 @@ trait ModelUsedTrait
 
     /**
      * Get the name of the "usage left" column.
-     *
-     * @return string
      */
     public static function getUsageLeftColumn(): string
     {
@@ -45,8 +39,6 @@ trait ModelUsedTrait
 
     /**
      * Get the fully qualified "usage left" column.
-     *
-     * @return string
      */
     public function getQualifiedUsageLeftColumn(): string
     {
@@ -55,10 +47,6 @@ trait ModelUsedTrait
 
     /***** OTHER FUNCTIONS *****/
 
-    /**
-     * @param  int  $amount
-     * @return bool
-     */
     public function use(int $amount = 1): bool
     {
         $column = self::getUsageLeftColumn();
@@ -70,10 +58,6 @@ trait ModelUsedTrait
         return $this->save();
     }
 
-    /**
-     * @param  int  $amount
-     * @return bool
-     */
     public function unuse(int $amount = 1): bool
     {
         $column = self::getUsageLeftColumn();

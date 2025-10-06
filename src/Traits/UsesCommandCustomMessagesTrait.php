@@ -20,67 +20,34 @@ trait UsesCommandCustomMessagesTrait
 {
     protected bool $has_set_output_formatters = false;
 
-    /**
-     * @param  string  $message
-     * @param  bool  $add_ellipsis
-     * @param  int|string|null  $verbosity
-     * @return void
-     */
     public function ongoing(string $message, bool $add_ellipsis = true, int|string|null $verbosity = null): void
     {
         $message = Str::of($message)->when($add_ellipsis, fn (Stringable $str) => $str->finish('...'))->jsonSerialize();
         $this->note(message: $message, title: 'ONGOING', verbosity: $verbosity);
     }
 
-    /**
-     * @param  string  $message
-     * @param  int|string|null  $verbosity
-     * @return void
-     */
     public function done(string $message, int|string|null $verbosity = null): void
     {
         $this->note(message: $message, title: 'DONE', verbosity: $verbosity);
     }
 
-    /**
-     * @param  string  $message
-     * @param  int|string|null  $verbosity
-     * @return void
-     */
     public function success(string $message, int|string|null $verbosity = null): void
     {
         $this->note(message: $message, title: 'SUCCESS', verbosity: $verbosity);
     }
 
-    /**
-     * @param  string  $message
-     * @param  int|string|null  $verbosity
-     * @return void
-     */
     public function failed(string $message, int|string|null $verbosity = null): void
     {
         $this->setupOutputFormatters();
         $this->error(Str::finish("$message", '.'), $verbosity);
     }
 
-    /**
-     * @param  string  $message
-     * @param  int|string|null  $verbosity
-     * @return void
-     */
     public function warning(string $message, int|string|null $verbosity = null): void
     {
         $this->setupOutputFormatters();
         $this->warn(Str::finish("<yellow-bg-bold> WARNING </yellow-bg-bold> $message", '.'), $verbosity);
     }
 
-    /**
-     * @param  string  $message
-     * @param  string  $title
-     * @param  bool  $add_period
-     * @param  int|string|null  $verbosity
-     * @return void
-     */
     public function note(string $message, string $title = 'INFO', bool $add_period = true, int|string|null $verbosity = null): void
     {
         $this->setupOutputFormatters();
@@ -93,9 +60,6 @@ trait UsesCommandCustomMessagesTrait
         $this->info($message->jsonSerialize(), $verbosity);
     }
 
-    /**
-     * @return void
-     */
     private function setupOutputFormatters(): void
     {
         // Skip if already set
@@ -130,11 +94,6 @@ trait UsesCommandCustomMessagesTrait
         $this->has_set_output_formatters = true;
     }
 
-    /**
-     * @param  string|null  $str
-     * @param  string  $color
-     * @return string
-     */
     public function getBoldText(?string $str = null, string $color = 'green'): string
     {
         return "<$color-bold>$str</$color-bold>";
@@ -142,13 +101,6 @@ trait UsesCommandCustomMessagesTrait
 
     /**
      * @link https://symfony.com/doc/current/components/console/helpers/table.html
-     *
-     * @param  string|null  $title
-     * @param  array  $headers
-     * @param  Collection|array  $rows
-     * @param  string  $title_format
-     * @param  TableStyle|string  $table_style
-     * @return Table|null
      */
     public function createTable(?string $title = null, array $headers = [], Collection|array $rows = [], string $title_format = 'default-bold', TableStyle|string $table_style = 'box'): ?Table
     {
@@ -174,12 +126,6 @@ trait UsesCommandCustomMessagesTrait
         return null;
     }
 
-    /**
-     * @param  string  $text
-     * @param  string  $text_format
-     * @param  int  $colspan
-     * @return TableCell
-     */
     public function createTableCell(string $text, string $text_format = 'green-bold', int $colspan = 1): TableCell
     {
         return new TableCell($text, [

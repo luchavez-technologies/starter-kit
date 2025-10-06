@@ -18,21 +18,11 @@ use ReflectionException;
  */
 trait UsesDataParsingTrait
 {
-    /**
-     * @param  array  $response
-     * @param  string|null  $key
-     * @return array
-     */
     public function parseArray(array $response, ?string $key = null): array
     {
         return $key && isset($response[$key]) ? Arr::wrap($response[$key]) : $response;
     }
 
-    /**
-     * @param  Response  $response
-     * @param  string|null  $key
-     * @return array
-     */
     public function parseResponse(Response $response, ?string $key = null): array
     {
         if ($response->ok() && $array = $response->json($key)) {
@@ -42,11 +32,6 @@ trait UsesDataParsingTrait
         return [];
     }
 
-    /**
-     * @param  Request  $response
-     * @param  string|null  $key
-     * @return array
-     */
     public function parseRequest(Request $response, ?string $key = null): array
     {
         $response = $response instanceof FormRequest ? $response->validated() : $response->all();
@@ -54,41 +39,21 @@ trait UsesDataParsingTrait
         return $this->parse($response, $key);
     }
 
-    /**
-     * @param  Collection  $response
-     * @param  string|null  $key
-     * @return array
-     */
     public function parseCollection(Collection $response, ?string $key = null): array
     {
         return $key && $response->has($key) ? $this->parse($response->get($key)) : $response->toArray();
     }
 
-    /**
-     * @param  BaseJsonSerializable  $response
-     * @param  string|null  $key
-     * @return array
-     */
     public function parseBaseJsonSerializable(BaseJsonSerializable $response, ?string $key = null): array
     {
         return $this->parse($response->toArray(), $key);
     }
 
-    /**
-     * @param  Model  $response
-     * @param  string|null  $key
-     * @return array
-     */
     public function parseModel(Model $response, ?string $key = null): array
     {
         return $key && isset($response->$key) ? $this->parse($response->$key) : $response->toArray();
     }
 
-    /**
-     * @param  mixed  $data
-     * @param  string|null  $key
-     * @return array
-     */
     public function parse(mixed $data = [], ?string $key = null): array
     {
         if (is_array($data)) {

@@ -16,37 +16,18 @@ use Luchavez\StarterKit\Abstracts\BaseStarterKitServiceProvider;
  */
 class ServiceProviderData extends BaseJsonSerializable
 {
-    /**
-     * @var string
-     */
     public string $class;
 
-    /**
-     * @var string
-     */
     public string $composer;
 
     public ?ServiceProvider $provider;
 
-    /**
-     * @var string|null
-     */
     public ?string $package = null;
 
-    /**
-     * @var string|null
-     */
     public ?string $domain = null;
 
-    /**
-     * @var string
-     */
     public string $path;
 
-    /**
-     * @param  mixed  $data
-     * @param  string|null  $key
-     */
     public function __construct(mixed $data = [], ?string $key = null)
     {
         parent::__construct($data, $key);
@@ -59,11 +40,6 @@ class ServiceProviderData extends BaseJsonSerializable
 
     /***** GETTERS *****/
 
-    /**
-     * @param  bool  $as_namespace
-     * @param  string  $separator
-     * @return string|null
-     */
     public function getDecodedDomain(bool $as_namespace = false, string $separator = '.'): ?string
     {
         if ($this->domain) {
@@ -75,10 +51,6 @@ class ServiceProviderData extends BaseJsonSerializable
 
     /***** OTHER FUNCTIONS *****/
 
-    /**
-     * @param  ServiceProvider  $provider
-     * @return array
-     */
     protected function parseServiceProvider(ServiceProvider $provider): array
     {
         $this->provider = $provider;
@@ -124,17 +96,11 @@ class ServiceProviderData extends BaseJsonSerializable
         ];
     }
 
-    /**
-     * @return ServiceProvider|null
-     */
     public function getServiceProvider(): ?ServiceProvider
     {
         return $this->provider ?? app()->getProvider($this->class);
     }
 
-    /**
-     * @return Collection|null
-     */
     public function getPackageEnvVars(): ?Collection
     {
         $provider = $this->getServiceProvider();
@@ -146,9 +112,6 @@ class ServiceProviderData extends BaseJsonSerializable
         return null;
     }
 
-    /**
-     * @return bool
-     */
     public function publishEnvVars(): bool
     {
         if ($env_vars = $this->getPackageEnvVars()) {
